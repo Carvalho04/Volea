@@ -2,32 +2,156 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+/* styles.css */
+
+body {
+  background-color: #deecff; /* Cor de fundo do body */
 }
 
-@media (prefers-color-scheme: dark) {
+header {
+  background-color: #114494; /* Cor do fundo do header */
+}
+
+header a {
+  color: #f9b800; /* Cor dos links do header */
+}
+
+header a:hover {
+  text-decoration: underline; /* Efeito hover nos links do header */
+}
+
+footer {
+  background-color: #114494; /* Cor do fundo do footer */
+}
+
+footer a {
+  color: #f9b800; /* Cor dos links do footer */
+}
+
+footer a:hover {
+  text-decoration: underline; /* Efeito hover nos links do footer */
+}
+
+.card {
+  background-color: #fff6d8; /* Cor de fundo dos cards */
+}
+
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background: 210 100% 97%;
+    --foreground: 339 20% 20%;
+    --primary: 44 100% 51%; /* Substitui o rosa pelo amarelo (#f9b800) */
+    --primary-foreground: 210 22% 22%;
+    --secondary: 196 75% 88%;
+    --secondary-foreground: 210 22% 22%;
+    --accent: 211 86% 70%;
+    --accent-foreground: 210 22% 22%;
+    --destructive: 0 93% 73%;
+    --destructive-foreground: 210 22% 22%;
+    --muted: 210 100% 95%;
+    --muted-foreground: 210 22% 22%;
+    --card: 210 100% 97%;
+    --card-foreground: 210 22% 22%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 341 20% 22%;
+    --border: 210 40% 80%;
+    --input: 210 40% 56%;
+    --ring: 210 40% 60%;
+    --radius: 1rem;
+    
+    /* Adiciona cores para header e footer */
+    --header-background: 221 100% 28%; /* #114494 */
+    --footer-background: 221 100% 28%; /* #114494 */
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+/* .dark{
+  --background: 210 100% 6%;
+    --foreground: 180 100% 90%;
+    --primary: 44 100% 51%; Tom de amarelo (#f9b800)
+    --primary-foreground: 180 100% 90%;
+    --secondary: 221 100% 28%; /* Azul escuro (#114494) 
+    --secondary-foreground: 180 100% 90%;
+    --accent: 44 100% 51%; /* Tom de amarelo (#f9b800) 
+    --accent-foreground: 180 100% 90%;
+    --destructive: 0 98% 44%;
+    --destructive-foreground: 0 0% 100%;
+    --muted: 200 50% 30%;
+    --muted-foreground: 180 100% 90%;
+    --card: 210 100% 12%;
+    --card-foreground: 180 100% 90%;
+    --popover: 210 100% 15%;
+    --popover-foreground: 180 100% 90%;
+    --border: 221 100% 28%; /* Azul escuro (#114494)
+    --input: 221 100% 28%; /* Azul escuro (#114494) 
+    --ring: 180 100% 90%;
+    --radius: 0rem; 
+} */
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+
+
+/* @layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 220.9 39.3% 11%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 224 71.4% 4.1%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 20% 98%;
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 210 20% 98%;
+    --primary-foreground: 220.9 39.3% 11%;
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 216 12.2% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+} */
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
