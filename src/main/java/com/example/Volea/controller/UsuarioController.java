@@ -47,7 +47,7 @@ public class UsuarioController {
     @GetMapping("/alunos")
     public ResponseEntity<List<Usuario>> getAlunos() {
         List<Usuario> alunos = usuarioService.findUsuariosByTipo(2); // Filtra os alunos (tipo = 2)
-        return ResponseEntity.ok(alunos);
+        return ResponseEntity.ok(alunos);   
     }
  
     @GetMapping("/alunos/ativos")

@@ -10,7 +10,8 @@ import lombok.Setter;
 public class EventoDTO {
 
     private String nome;
-    private String desc;
-    private Date dataPublic;
+    private String descricao;
     private Date dataEvento;
+    private int maxParticipantes;
+    private int idProfessor;
 }

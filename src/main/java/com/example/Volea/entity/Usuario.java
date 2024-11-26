@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -44,6 +45,7 @@ import lombok.Builder.Default;
 
 @Entity
 @Table (name = "users")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Usuario {
     
 
@@ -74,12 +76,6 @@ public class Usuario {
     @Column (name = "data_nasc")
     private Date dataNasc;
 
-    @ManyToOne
-    @JoinColumn(name = "graduation_id")
-    @JsonBackReference
-    // @JsonIgnore
-    private Graduacao graduacao;
-
     @Column (name = "ativo", nullable = false)
     private boolean ativo = true;
 
@@ -92,7 +88,9 @@ public class Usuario {
 
     @ManyToMany(mappedBy = "alunos")
     private List<Classe> classes;
-
+    
+    @ManyToMany(mappedBy = "alunos")
+    private List<Evento> eventos;
         // @JsonCreator
         // public Usuario(int id) {
         //     this.id = id;    

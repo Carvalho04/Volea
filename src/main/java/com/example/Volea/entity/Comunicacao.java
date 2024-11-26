@@ -39,19 +39,19 @@ public class Comunicacao {
     private String nome;
 
     @Column (name = "descricao")
-    private String desc;
+    private String descricao;
 
     @Column (name = "data_publi")
     private Date dataPublic;
 
-   @JsonCreator
-    public Comunicacao(int id) {
-        this.id = id;
-    }
-    @JsonValue
-    public int getIdJson() {
-        return id;
-    }
+//    @JsonCreator
+//     public Comunicacao(int id) {
+//         this.id = id;
+//     }
+//     @JsonValue
+//     public int getIdJson() {
+//         return id;
+    // }
 
   
 }

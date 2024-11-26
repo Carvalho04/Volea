@@ -5,16 +5,24 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.Volea.entity.Aula;
+import com.example.Volea.entity.Classe;
 import com.example.Volea.repository.AulaRepository;
+import com.example.Volea.repository.ClasseRepository;
 
 @Service
 public class AulaService {
     
     @Autowired
     private AulaRepository AulaRepository;
+    
+    @Autowired
+    private ClasseRepository turmaRepository;
+
 
 
     public List<Aula> findAllAula(){
@@ -41,5 +49,15 @@ public class AulaService {
 
    
 
+    public Aula criarAula(Aula aula) {
+        Optional<Classe> turmaOpt = turmaRepository.findById(aula.getClasse().getId());
+        
+        if (turmaOpt.isPresent()) {
+            aula.setClasse(turmaOpt.get());
+            return AulaRepository.save(aula);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Turma não encontrada");
+        }
+    }
 }
     

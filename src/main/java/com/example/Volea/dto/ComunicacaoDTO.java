@@ -12,7 +12,7 @@ import lombok.Setter;
 public class ComunicacaoDTO {
 
     private String nome;
-    private String desc;
+    private String descricao;
     private Date dataPublic;
     
 }

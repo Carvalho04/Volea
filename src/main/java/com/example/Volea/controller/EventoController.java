@@ -61,11 +61,8 @@ public class EventoController {
             if (eventoDTO.getNome() != null) {
                 existingEvento.setNome(eventoDTO.getNome());
             }
-            if (eventoDTO.getDesc() != null) {
-                existingEvento.setDesc(eventoDTO.getDesc());
-            }
-            if (eventoDTO.getDataPublic() != null) {
-                existingEvento.setDataPublic(eventoDTO.getDataPublic());
+            if (eventoDTO.getDescricao() != null) {
+                existingEvento.setDescricao(eventoDTO.getDescricao());
             }
             if (eventoDTO.getDataEvento() != null) {
                 existingEvento.setDataEvento(eventoDTO.getDataEvento());

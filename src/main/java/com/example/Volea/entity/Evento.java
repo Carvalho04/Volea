@@ -1,6 +1,7 @@
 package com.example.Volea.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -11,6 +12,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -39,7 +44,7 @@ public class Evento {
     private String nome;
 
     @Column (name = "descricao")
-    private String desc;
+    private String descricao;
 
     @Column (name = "data_publi")
     private Date dataPublic;
@@ -47,12 +52,26 @@ public class Evento {
     @Column (name = "data_event")
     private Date dataEvento;
 
-    @JsonCreator
-    public Evento(int id) {
-        this.id = id;
-    }
-    @JsonValue
-    public int getIdJson() {
-        return id;
-    }
+    @Column (name = "professorid")
+    private int professorId;
+
+    @Column(name = "maxparticipantes")
+    private int maxPariticipantes;
+
+    @ManyToMany
+    @JoinTable(
+    name = "evento_aluno",
+    joinColumns = @JoinColumn(name = "evento_id"), 
+    inverseJoinColumns = @JoinColumn(name = "usuario_id") 
+    )
+    private List<Usuario> alunos;
+
+    // @JsonCreator
+    // public Evento(int id) {
+    //     this.id = id;
+    // }
+    // @JsonValue
+    // public int getIdJson() {
+    //     return id;
+    // }
 }

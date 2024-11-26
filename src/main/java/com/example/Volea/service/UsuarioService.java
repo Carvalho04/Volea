@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.Volea.config.CPFValidator;
 import com.example.Volea.dto.UsuarioDTO;
-import com.example.Volea.entity.Graduacao;
 import com.example.Volea.entity.Usuario;
 import com.example.Volea.repository.UsuarioRepository;
 

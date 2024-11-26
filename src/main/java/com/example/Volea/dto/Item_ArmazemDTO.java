@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class Item_ArmazemDTO {
     
-private String desc;
+private String descricao;
 
 }

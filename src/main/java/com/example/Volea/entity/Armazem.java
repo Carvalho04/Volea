@@ -3,6 +3,7 @@ package com.example.Volea.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import jakarta.persistence.Column;
@@ -36,21 +37,24 @@ public class Armazem {
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
     
-    @OneToMany (mappedBy = "armazem")
-    private List <Item_Armazem> itens;
+    // @OneToMany (mappedBy = "armazem")
+    // @JsonManagedReference
+    // private List <Item_Armazem> itens;
 
+    @Column(name = "item_id", nullable = false)
+    private int itemId; 
 
     @Column(name = "quantidade")
     private int quantidade;
 
 
-    @JsonCreator
-    public Armazem(int id) {
-        this.id = id;
-    }
-    @JsonValue
-    public int getIdJson() {
-        return id;
-    }
+    // @JsonCreator
+    // public Armazem(int id) {
+    //     this.id = id;
+    // }
+    // @JsonValue
+    // public int getIdJson() {
+    //     return id;
+    // }
 
 }

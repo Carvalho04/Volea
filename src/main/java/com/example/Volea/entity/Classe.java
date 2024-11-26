@@ -3,10 +3,12 @@ package com.example.Volea.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -45,36 +47,35 @@ public class Classe {
     private String nome;
     
     @Column (name = "descricao")
-    private String desc;
+    private String descricao;
 
     @ManyToMany
-    @JoinTable(
-    name = "classe_alunos",
-    joinColumns = @JoinColumn(name = "classe_id"), 
-    inverseJoinColumns = @JoinColumn(name = "usuario_id") 
-    )
+    @JoinTable(name = "classe_alunos", joinColumns = @JoinColumn(name = "classe_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
     private List<Usuario> alunos;
 
 
-    @ManyToOne
-    @JoinColumn (name = "sport_id")
+    @ManyToOne (fetch = FetchType.EAGER)
+    @JoinColumn (name = "id_esporte")
     private Esporte esporte;
 
- 
+    // @ManyToOne
+    // @JoinColumn (name = "id_professor")
+    // private Usuario idProfessor;
+
     @OneToMany (mappedBy = "classe")
     private List <Aula> aulas;
     
     @OneToMany (mappedBy = "classe")
     private List <Chamada> chamadas;
 
-    @JsonCreator
-    public Classe(int id) {
-        this.id = id;
-    }
-    @JsonValue
-    public int getIdJson() {
-        return id;
-    }
+    // @JsonCreator
+    // public Classe(int id) {
+    //     this.id = id;
+    // }
+    // @JsonValue
+    // public int getIdJson() {
+    //     return id;
+    // }
 
 
 }

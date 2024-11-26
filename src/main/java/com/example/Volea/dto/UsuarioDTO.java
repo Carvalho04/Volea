@@ -15,7 +15,6 @@ public class UsuarioDTO {
     private String cpf;
     private String pass;
     private String dataNasc;
-    private int graduacao; 
     private int tipo;  
     
 }

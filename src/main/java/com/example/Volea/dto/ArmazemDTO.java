@@ -8,6 +8,6 @@ import lombok.Setter;
 public class ArmazemDTO {
     
     private int quantidade;
-    private int item;
+    private int itemId;
 
 }

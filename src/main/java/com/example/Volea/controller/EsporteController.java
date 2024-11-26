@@ -24,7 +24,7 @@ import com.example.Volea.service.EsporteService;
 
 @RestController
 @RequestMapping("api/esportes")
-@CrossOrigin(origins = "http://localhost:3000")
+// @CrossOrigin(origins = "http://localhost:3000")
 public class EsporteController {
 
     @Autowired

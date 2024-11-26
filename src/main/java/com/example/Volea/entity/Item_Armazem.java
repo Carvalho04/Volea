@@ -2,7 +2,9 @@ package com.example.Volea.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import jakarta.persistence.Column;
@@ -37,20 +39,23 @@ public class Item_Armazem {
     private int id;
     
 
+    @JsonProperty("descricao")
     @Column(name = "descricao")
-    private String desc;
+    private String descricao;
 
+    
     @ManyToOne
     @JoinColumn(name = "item_id")
+    @JsonBackReference
     private Armazem armazem;
   
 
-    @JsonCreator
-    public Item_Armazem(int id) {
-        this.id = id;
-    }
-    @JsonValue
-    public int getIdJson() {
-        return id;
-    }
+    // @JsonCreator
+    // public Item_Armazem(int id) {
+    //     this.id = id;
+    // }
+    // @JsonValue
+    // public int getIdJson() {
+    //     return id;
+    // }
 }

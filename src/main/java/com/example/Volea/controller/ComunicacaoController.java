@@ -62,8 +62,8 @@ public class ComunicacaoController {
             if (comunicacaoDTO.getNome() != null) {
                 existingComunicacao.setNome(comunicacaoDTO.getNome());
             }
-            if (comunicacaoDTO.getDesc() != null) {
-                existingComunicacao.setDesc(comunicacaoDTO.getDesc());
+            if (comunicacaoDTO.getDescricao() != null) {
+                existingComunicacao.setDescricao(comunicacaoDTO.getDescricao());
             }
             if (comunicacaoDTO.getDataPublic() != null) {
                 existingComunicacao.setDataPublic(comunicacaoDTO.getDataPublic());

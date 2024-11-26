@@ -58,8 +58,8 @@ public class Item_ArmazemController {
             Item_Armazem existingItem_Armazem = existingItem_ArmazemOptional.get();
 
             // Atualize apenas os campos que não são nulos no DTO
-            if (itemDTO.getDesc() != null) {
-                existingItem_Armazem.setDesc(itemDTO.getDesc());
+            if (itemDTO.getDescricao() != null) {
+                existingItem_Armazem.setDescricao(itemDTO.getDescricao());
             }
 
             Item_Armazem updatedItem_Armazem = itemService.atualizaItem_Armazem(existingItem_Armazem);

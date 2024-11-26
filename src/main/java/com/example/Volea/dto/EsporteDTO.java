@@ -8,5 +8,6 @@ import lombok.Setter;
 public class EsporteDTO {
     
 private String descricao;
+private int esporteId;
 
 }
