@@ -12,35 +12,35 @@ import Link from "next/link";
 import { useRouter } from 'next/navigation';
 import { AxiosResponse } from 'axios';
 
-interface Esporte {
+interface Material {
   id: number;
   descricao: string;
   ativo: boolean;
 }
 
-export function CadastroEsporte() {
+export function CadastroMaterial() {
   const [formData, setFormData] = useState({
     descricao: '',
   });
 
-  const [esportes, setEsportes] = useState<Esporte[]>([]);
+  const [materiais, setMateriais] = useState<Material[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const router = useRouter();
-  const [selectedEsporte, setSelectedEsporte] = useState<Esporte | null>(null);
+  const [selectedMaterial, setSelectedMaterial] = useState<Material | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    const fetchEsportes = async () => {
+    const fetchMateriais = async () => {
       try {
-        const response = await api.get('/api/esportes');
-        setEsportes(response.data);
+        const response = await api.get('/api/itens');
+        setMateriais(response.data);
       } catch (error) {
-        console.error("Erro ao carregar esportes", error);
+        console.error("Erro ao carregar materiais.", error);
       }
     };
-    fetchEsportes();
+    fetchMateriais();
   }, []);
 
   useEffect(() => {
@@ -59,21 +59,21 @@ export function CadastroEsporte() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleEditar = (esporte: Esporte) => {
-    setSelectedEsporte(esporte); 
+  const handleEditar = (material: Material) => {
+    setSelectedMaterial(material); 
     setFormData({
-      descricao: esporte.descricao,
+      descricao: material.descricao,
     });
   };
 
   const handleExcluir = async (id: number) => {
     try {
-      await api.delete(`/api/esportes/${id}`);
+      await api.delete(`/api/itens/${id}`);
       setSubmitStatus('success');
-      setEsportes(prev => prev.filter(esporte => esporte.id !== id));
+      setMateriais(prev => prev.filter(material => material.id !== id));
     } catch (error) {
       setSubmitStatus('error');
-      setErrorMessage("Erro ao excluir esporte.");
+      setErrorMessage("Erro ao excluir material.");
     }
   };
 
@@ -92,31 +92,31 @@ export function CadastroEsporte() {
   
     try {
       let response: AxiosResponse<any, any>;
-      if (selectedEsporte) {
+      if (selectedMaterial) {
         // Se estamos editando, fazemos o update
-        response = await api.put(`/api/esportes/${selectedEsporte.id}`, formData);
-        setEsportes(prev =>
-          prev.map((esporte) =>
-            esporte.id === selectedEsporte.id ? response.data : esporte
+        response = await api.put(`/api/itens/${selectedMaterial.id}`, formData);
+        setMateriais(prev =>
+          prev.map((material) =>
+            material.id === selectedMaterial.id ? response.data : material
           )
         );
-        setSelectedEsporte(null); // Limpar após o update
+        setSelectedMaterial(null); // Limpar após o update
       } else {
-        // Caso contrário, criamos um novo esporte
-        response = await api.post('/api/esportes', formData);
-        setEsportes(prev => [...prev, response.data]);
+        // Caso contrário, criamos um novo material
+        response = await api.post('/api/itens', formData);
+        setMateriais(prev => [...prev, response.data]);
       }
       setSubmitStatus('success');
       setFormData({ descricao: '' }); // Limpar formulário
     } catch (error) {
       setSubmitStatus('error');
-      setErrorMessage("Erro ao cadastrar ou editar esporte.");
+      setErrorMessage("Erro ao cadastrar ou editar material.");
     }
     setIsSubmitting(false);
   };
 
-  const filteredEsportes = esportes.filter((esporte) => {
-    const descricao = esporte.descricao || ""; // Garantir que 'descricao' seja uma string válida
+  const filteredMateriais = materiais.filter((material) => {
+    const descricao = material.descricao || ""; // Garantir que 'descricao' seja uma string válida
     return descricao.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
@@ -146,7 +146,7 @@ export function CadastroEsporte() {
         <Card style={{ backgroundColor: "#f4e7c3" }}>
           <CardHeader>
             <CardTitle className="text-2xl font-bold">
-              {selectedEsporte ? 'Editar Esporte' : 'Cadastrar Esporte'}
+              {selectedMaterial ? 'Editar Material' : 'Cadastrar Material'}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -170,13 +170,13 @@ export function CadastroEsporte() {
                 disabled={isSubmitting || !formData.descricao}
                 className="w-full md:w-auto mt-4"
               >
-                {selectedEsporte ? 'Salvar Alterações' : 'Cadastrar'}
+                {selectedMaterial ? 'Salvar Alterações' : 'Cadastrar'}
               </Button>
               
               <Button
                 type="button"
                 onClick={() => {
-                  setSelectedEsporte(null);
+                  setSelectedMaterial(null);
                   setFormData({ descricao: ''});
                 }}
                 className="w-full md:w-auto mt-4"
@@ -192,7 +192,7 @@ export function CadastroEsporte() {
         <div className="flex items-center space-x-4">
           <div className="relative">
             <Input
-              placeholder="Pesquise pelo nome do esporte..."
+              placeholder="Pesquise pelo nome do material..."
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-4 pr-10"
             />
@@ -202,29 +202,29 @@ export function CadastroEsporte() {
           </div>
         </div>
   
-        {/* Lista de esportes */}
+        {/* Lista de Materiais */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredEsportes.length === 0 ? (
+          {filteredMateriais.length === 0 ? (
             <Alert>
               <AlertCircle className="h-5 w-5" />
-              <AlertDescription>Nenhum esporte encontrado.</AlertDescription>
+              <AlertDescription>Nenhum material encontrado.</AlertDescription>
             </Alert>
           ) : (
-            filteredEsportes.map((esporte) => (
-              <Card key={esporte.id}>
+            filteredMateriais.map((material) => (
+              <Card key={material.id}>
                 <CardHeader>
-                  <CardTitle>{esporte.descricao}</CardTitle>
+                  <CardTitle>{material.descricao}</CardTitle>
                 </CardHeader>
                 <CardContent className="flex justify-between items-center">
                   <div>
                     <Button
-                      onClick={() => handleEditar(esporte)}
+                      onClick={() => handleEditar(material)}
                       className="mr-2"
                     >
                       <Edit className="h-4 w-4" />
                     </Button>
                     <Button
-                      onClick={() => handleExcluir(esporte.id)}
+                      onClick={() => handleExcluir(material.id)}
                       variant="destructive"
                     >
                       <Trash2 className="h-4 w-4" />

@@ -1,11 +1,11 @@
 'use client';
-import { CadastrarEventos } from "@/components/CadastrarEventos";
+import { CadastroEvento } from "@/components/CadastrarEventos";
 
 
 export default function CadastEventos() {
     return (
       <div>
-        <CadastrarEventos/>
+        <CadastroEvento/>
       </div>
     );
   }

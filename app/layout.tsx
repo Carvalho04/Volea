@@ -19,6 +19,7 @@ export default function RootLayout({
     <html lang="pt">
         <body>
           <AuthProvider>{children}</AuthProvider> {/* Envolvendo o children */}
+
         </body>
     </html>
   );
