@@ -7,7 +7,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.Volea.entity.Esporte;
 import com.example.Volea.entity.Item_Armazem;
+import com.example.Volea.repository.EsporteRepository;
 import com.example.Volea.repository.Item_ArmazemRepository;
 
 @Service
@@ -39,6 +41,14 @@ public class Item_ArmazemService {
         Item_ArmazemRepository.deleteById(id);
     }
 
+       //Buscando por ativos e inativos
+   public List<Item_Armazem> getItensAtivos() {
+        return Item_ArmazemRepository.findByAtivoTrue();
+    }
+
+    public List<Item_Armazem> getItensInativos() {
+        return Item_ArmazemRepository.findByAtivoFalse();
+    }
    
 
 }

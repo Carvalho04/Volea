@@ -47,6 +47,8 @@ public class Armazem {
     @Column(name = "quantidade")
     private int quantidade;
 
+    @Column (name = "ativo", nullable = false)
+    private boolean ativo = true;
 
     // @JsonCreator
     // public Armazem(int id) {

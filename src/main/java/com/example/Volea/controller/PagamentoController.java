@@ -39,6 +39,43 @@ public class PagamentoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/ativos")
+    public List<Pagamento> getPagamentosAtivos() {
+        return pagamentoService.getPagamentosAtivos();
+    }
+
+    @GetMapping("/inativos")
+    public List<Pagamento> getPagamentosInativos() {
+        return pagamentoService.getPagamentosInativos();
+    }   
+
+    @PutMapping("/ativar/{id}")
+    public ResponseEntity<Void> ativarPagamento(@PathVariable int id) {
+        Optional<Pagamento> pagamentoOptional = pagamentoService.findPagamentoById(id);
+        if (pagamentoOptional.isPresent()) {
+            Pagamento pagamento = pagamentoOptional.get();
+            pagamento.setAtivo(true); 
+            pagamentoService.savePagamento(pagamento); 
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build(); 
+        }
+    }
+
+    @PutMapping("/desativar/{id}")
+    public ResponseEntity<Void> desativarPagamento(@PathVariable int id) {
+        Optional<Pagamento> pagamentoOptional = pagamentoService.findPagamentoById(id);
+        if (pagamentoOptional.isPresent()) {
+            Pagamento pagamento = pagamentoOptional.get();
+            pagamento.setAtivo(false); 
+            pagamentoService.savePagamento(pagamento);
+            return ResponseEntity.noContent().build(); 
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
     @PostMapping
     public Pagamento createPagamento(@RequestBody Pagamento pagamento) {
         return pagamentoService.savePagamento(pagamento);

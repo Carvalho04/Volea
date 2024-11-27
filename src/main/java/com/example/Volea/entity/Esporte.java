@@ -50,6 +50,9 @@ public class Esporte {
         this.id = id;
     }
     
+    @Column (name = "ativo", nullable = false)
+    private boolean ativo = true;
+    
     // @JsonCreator
     // public Esporte(int id) {
     //     this.id = id;

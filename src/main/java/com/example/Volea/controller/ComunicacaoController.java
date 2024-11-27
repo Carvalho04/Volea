@@ -40,6 +40,43 @@ public class ComunicacaoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/ativos")
+    public List<Comunicacao> getComunicacoesAtivos() {
+        return comunicacaoService.getComunicacoesAtivos();
+    }
+
+    @GetMapping("/inativos")
+    public List<Comunicacao> getComunicacoesInativos() {
+        return comunicacaoService.getComunicacoesInativos();
+    }   
+
+    @PutMapping("/ativar/{id}")
+    public ResponseEntity<Void> ativarComunicacao(@PathVariable int id) {
+        Optional<Comunicacao> comunicacaoOptional = comunicacaoService.findComunicacaoById(id);
+        if (comunicacaoOptional.isPresent()) {
+            Comunicacao comunicacao = comunicacaoOptional.get();
+            comunicacao.setAtivo(true); 
+            comunicacaoService.saveComunicacao(comunicacao); 
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build(); 
+        }
+    }
+
+    @PutMapping("/desativar/{id}")
+    public ResponseEntity<Void> desativarComunicacao(@PathVariable int id) {
+        Optional<Comunicacao> comunicacaoOptional = comunicacaoService.findComunicacaoById(id);
+        if (comunicacaoOptional.isPresent()) {
+            Comunicacao comunicacao = comunicacaoOptional.get();
+            comunicacao.setAtivo(false); 
+            comunicacaoService.saveComunicacao(comunicacao);
+            return ResponseEntity.noContent().build(); 
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
     @PostMapping
     public Comunicacao createComunicacao(@RequestBody Comunicacao comunicacao) {
         return comunicacaoService.saveComunicacao(comunicacao);

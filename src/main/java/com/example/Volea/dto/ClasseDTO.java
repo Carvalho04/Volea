@@ -17,5 +17,6 @@ public class ClasseDTO {
     private String nome;
     private String descricao;
     private int esporteId;
+    private int professorId;
 
 }

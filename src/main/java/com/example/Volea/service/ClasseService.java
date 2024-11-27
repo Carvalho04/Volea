@@ -52,6 +52,15 @@ public class ClasseService {
     public void deleteClasse(int id) {
         ClasseRepository.deleteById(id);
     }
+
+    //Buscando por ativos e inativos
+    public List<Classe> getClassesAtivos() {
+        return ClasseRepository.findByAtivoTrue();
+    }
+
+    public List<Classe> getClassesInativos() {
+        return ClasseRepository.findByAtivoFalse();
+    }    
     
 //     public boolean matricularAluno(int turmaId, int usuarioId) {
 //     Optional<Classe> turmaOpt = ClasseRepository.findById(turmaId);

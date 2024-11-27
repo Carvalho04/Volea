@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Volea.dto.ClasseDTO;
 import com.example.Volea.entity.Classe;
 import com.example.Volea.entity.Esporte;
+import com.example.Volea.entity.Usuario;
 import com.example.Volea.repository.ClasseRepository;
 import com.example.Volea.repository.EsporteRepository;
+import com.example.Volea.repository.UsuarioRepository;
 import com.example.Volea.service.ClasseService;
 
 @RestController
@@ -33,7 +35,8 @@ public class ClasseController {
     private ClasseService classeService;
     @Autowired
     private EsporteRepository esporteRepository;
-
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
 
 
@@ -48,8 +51,45 @@ public class ClasseController {
         return classe.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/ativos")
+    public List<Classe> getClassesAtivos() {
+        return classeService.getClassesAtivos();
+    }
+
+    @GetMapping("/inativos")
+    public List<Classe> getClassesInativos() {
+        return classeService.getClassesInativos();
+    }   
+
+    @PutMapping("/ativar/{id}")
+    public ResponseEntity<Void> ativarClasse(@PathVariable int id) {
+        Optional<Classe> classeOptional = classeService.findClasseById(id);
+        if (classeOptional.isPresent()) {
+            Classe classe = classeOptional.get();
+            classe.setAtivo(true); 
+            classeService.saveClasse(classe); 
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build(); 
+        }
+    }
+
+    @PutMapping("/desativar/{id}")
+    public ResponseEntity<Void> desativarClasse(@PathVariable int id) {
+        Optional<Classe> classeOptional = classeService.findClasseById(id);
+        if (classeOptional.isPresent()) {
+            Classe classe = classeOptional.get();
+            classe.setAtivo(false); 
+            classeService.saveClasse(classe);
+            return ResponseEntity.noContent().build(); 
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping
-public ResponseEntity<Classe> createClasse(@RequestBody ClasseDTO classeDTO) {
+    public ResponseEntity<Classe> createClasse(@RequestBody ClasseDTO classeDTO) {
     // Cria a nova instância da classe
     Classe classe = new Classe();
     classe.setNome(classeDTO.getNome());
@@ -61,6 +101,13 @@ public ResponseEntity<Classe> createClasse(@RequestBody ClasseDTO classeDTO) {
 
     // Associa o Esporte à Classe
     classe.setEsporte(esporte);
+
+    // Busca o Esporte pelo ID
+    Usuario professor = usuarioRepository.findById(classeDTO.getProfessorId())
+    .orElseThrow(() -> new IllegalArgumentException("Professor não encontrado com ID: " + classeDTO.getProfessorId()));
+
+    // Associa o Esporte à Classe
+    classe.setProfessor(professor);
 
     // Salva a Classe no banco de dados
     Classe savedClasse = classeService.saveClasse(classe);

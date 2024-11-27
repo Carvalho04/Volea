@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Volea.dto.ChamadaDTO;
 import com.example.Volea.entity.Chamada;
+import com.example.Volea.entity.Chamada;
 import com.example.Volea.repository.ChamadaRepository;
 import com.example.Volea.service.ChamadaService;
 
@@ -39,6 +40,43 @@ public class ChamadaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/ativos")
+    public List<Chamada> getChamadasAtivos() {
+        return chamadaService.getChamadasAtivos();
+    }
+
+    @GetMapping("/inativos")
+    public List<Chamada> getChamadasInativos() {
+        return chamadaService.getChamadasInativos();
+    }    
+
+    @PutMapping("/ativar/{id}")
+    public ResponseEntity<Void> ativarChamada(@PathVariable int id) {
+        Optional<Chamada> chamadaOptional = chamadaService.findChamadaById(id);
+        if (chamadaOptional.isPresent()) {
+            Chamada chamada = chamadaOptional.get();
+            chamada.setAtivo(true); 
+            chamadaService.saveChamada(chamada); 
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build(); 
+        }
+    }
+
+    @PutMapping("/desativar/{id}")
+    public ResponseEntity<Void> desativarChamada(@PathVariable int id) {
+        Optional<Chamada> chamadaOptional = chamadaService.findChamadaById(id);
+        if (chamadaOptional.isPresent()) {
+            Chamada chamada = chamadaOptional.get();
+            chamada.setAtivo(false); 
+            chamadaService.saveChamada(chamada);
+            return ResponseEntity.noContent().build(); 
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    
     @PostMapping
     public Chamada createChamada(@RequestBody Chamada chamada) {
         return chamadaService.saveChamada(chamada);

@@ -7,7 +7,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.Volea.entity.Esporte;
 import com.example.Volea.entity.Pagamento;
+import com.example.Volea.repository.EsporteRepository;
 import com.example.Volea.repository.PagamentoRepository;
 
 @Service
@@ -39,7 +41,14 @@ public class PagamentoService {
         PagamentoRepository.deleteById(id);
     }
 
-   
+   //Buscando por ativos e inativos
+   public List<Pagamento> getPagamentosAtivos() {
+        return PagamentoRepository.findByAtivoTrue();
+    }
+
+    public List<Pagamento> getPagamentosInativos() {
+        return PagamentoRepository.findByAtivoFalse();
+    }   
 
 }
     

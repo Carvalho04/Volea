@@ -38,6 +38,43 @@ public class EventoController {
         return evento.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+    
+    @GetMapping("/ativos")
+    public List<Evento> getEventosAtivos() {
+        return eventoService.getEventosAtivos();
+    }
+
+    @GetMapping("/inativos")
+    public List<Evento> getEventosInativos() {
+        return eventoService.getEventoInativos();
+    }       
+
+    @PutMapping("/ativar/{id}")
+    public ResponseEntity<Void> ativarEvento(@PathVariable int id) {
+        Optional<Evento> eventoOptional = eventoService.findEventoById(id);
+        if (eventoOptional.isPresent()) {
+            Evento evento = eventoOptional.get();
+            evento.setAtivo(true); 
+            eventoService.saveEvento(evento); 
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build(); 
+        }
+    }
+
+    @PutMapping("/desativar/{id}")
+    public ResponseEntity<Void> desativarEvento(@PathVariable int id) {
+        Optional<Evento> eventoOptional = eventoService.findEventoById(id);
+        if (eventoOptional.isPresent()) {
+            Evento evento = eventoOptional.get();
+            evento.setAtivo(false); 
+            eventoService.saveEvento(evento);
+            return ResponseEntity.noContent().build(); 
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @PostMapping
     public Evento createEvento(@RequestBody Evento evento) {

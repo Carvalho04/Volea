@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Volea.entity.Chamada;
+import com.example.Volea.entity.Esporte;
 import com.example.Volea.repository.ChamadaRepository;
+import com.example.Volea.repository.EsporteRepository;
 
 @Service
 public class ChamadaService {
@@ -39,7 +41,14 @@ public class ChamadaService {
         ChamadaRepository.deleteById(id);
     }
 
-   
+    //Buscando por ativos e inativos
+   public List<Chamada> getChamadasAtivos() {
+        return ChamadaRepository.findByAtivoTrue();
+    }
+
+    public List<Chamada> getChamadasInativos() {
+        return ChamadaRepository.findByAtivoFalse();
+    }
 
 }
     

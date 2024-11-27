@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Volea.entity.Armazem;
+import com.example.Volea.entity.Esporte;
 import com.example.Volea.repository.ArmazemRepository;
+import com.example.Volea.repository.EsporteRepository;
 
 @Service
 public class ArmazemService {
@@ -40,7 +42,14 @@ public class ArmazemService {
         ArmazemRepository.deleteById(id);
     }
 
-   
+   //Buscando por ativos e inativos
+   public List<Armazem> getArmazemAtivos() {
+        return ArmazemRepository.findByAtivoTrue();
+    }
+
+    public List<Armazem> getArmazemInativos() {
+        return ArmazemRepository.findByAtivoFalse();
+    }   
 
 }
     

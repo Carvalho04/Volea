@@ -44,6 +44,9 @@ public class Plano {
     private String desc;
     
 
+    @Column (name = "ativo", nullable = false)
+    private boolean ativo = true;
+    
     @JsonCreator
     public Plano(int id) {
         this.id = id;

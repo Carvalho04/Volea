@@ -39,6 +39,43 @@ public class PlanoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/ativos")
+    public List<Plano> getPlanosAtivos() {
+        return planoService.getPlanosAtivos();
+    }
+
+    @GetMapping("/inativos")
+    public List<Plano> getPlanosInativos() {
+        return planoService.getPlanosInativos();
+    }    
+
+    @PutMapping("/ativar/{id}")
+    public ResponseEntity<Void> ativarPlano(@PathVariable int id) {
+        Optional<Plano> planoOptional = planoService.findPlanoById(id);
+        if (planoOptional.isPresent()) {
+            Plano plano = planoOptional.get();
+            plano.setAtivo(true); 
+            planoService.savePlano(plano); 
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build(); 
+        }
+    }
+
+    @PutMapping("/desativar/{id}")
+    public ResponseEntity<Void> desativarPlano(@PathVariable int id) {
+        Optional<Plano> planoOptional = planoService.findPlanoById(id);
+        if (planoOptional.isPresent()) {
+            Plano plano = planoOptional.get();
+            plano.setAtivo(false); 
+            planoService.savePlano(plano);
+            return ResponseEntity.noContent().build(); 
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
     @PostMapping
     public Plano createPlano(@RequestBody Plano plano) {
         return planoService.savePlano(plano);

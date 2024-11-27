@@ -59,6 +59,9 @@ public class Pagamento {
     @Column (name = "data_pagamento")
     private Date dataPagamento;
 
+    @Column (name = "ativo", nullable = false)
+    private boolean ativo = true;
+    
     @JsonCreator
     public Pagamento(int id) {
         this.id = id;

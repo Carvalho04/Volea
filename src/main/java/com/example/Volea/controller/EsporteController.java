@@ -42,15 +42,53 @@ public class EsporteController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-  @PostMapping
-  public ResponseEntity<Esporte> criarEsporte(@RequestBody Esporte esporte) {
-      if (esporte.getDescricao() == null || esporte.getDescricao().isEmpty()) {
-          return ResponseEntity.badRequest().body(null);
-      }
-      Esporte novoEsporte = esporteService.saveEsporte(esporte);
-      return ResponseEntity.status(HttpStatus.CREATED).body(novoEsporte);
-  }
+    //Listar ativos e inativos
+    @GetMapping("/ativos")
+    public List<Esporte> getEsportesAtivos() {
+        return esporteService.getEsportesAtivos();
+    }
+
+    @GetMapping("/inativos")
+    public List<Esporte> getEsportesInativos() {
+        return esporteService.getEsportesInativos();
+    }
+
+    @PostMapping
+    public ResponseEntity<Esporte> criarEsporte(@RequestBody Esporte esporte) {
+        if (esporte.getDescricao() == null || esporte.getDescricao().isEmpty()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        Esporte novoEsporte = esporteService.saveEsporte(esporte);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoEsporte);
+    }
   
+    @PutMapping("/ativar/{id}")
+    public ResponseEntity<Void> ativarEsporte(@PathVariable int id) {
+        Optional<Esporte> esporteOptional = esporteService.findEsporteById(id);
+        if (esporteOptional.isPresent()) {
+            Esporte esporte = esporteOptional.get();
+            esporte.setAtivo(true); // Define o esporte como ativo
+            esporteService.saveEsporte(esporte); // Atualiza o esporte no banco
+            return ResponseEntity.noContent().build(); // Retorna 204 (No Content)
+        } else {
+            return ResponseEntity.notFound().build(); // Retorna 404 se o esporte não existir
+        }
+    }
+
+    @PutMapping("/desativar/{id}")
+    public ResponseEntity<Void> desativarEsporte(@PathVariable int id) {
+        Optional<Esporte> esporteOptional = esporteService.findEsporteById(id);
+        if (esporteOptional.isPresent()) {
+            Esporte esporte = esporteOptional.get();
+            esporte.setAtivo(false); // Define o esporte como inativo
+            esporteService.saveEsporte(esporte); // Atualiza o esporte no banco
+            return ResponseEntity.noContent().build(); // Retorna 204 (No Content)
+        } else {
+            return ResponseEntity.notFound().build(); // Retorna 404 se o esporte não existir
+        }
+    }
+
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEsporte(@PathVariable int id) {
@@ -75,5 +113,9 @@ public class EsporteController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    
+    
+    
     }
+
 }

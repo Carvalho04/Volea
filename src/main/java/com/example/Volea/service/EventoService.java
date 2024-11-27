@@ -7,7 +7,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.Volea.entity.Esporte;
 import com.example.Volea.entity.Evento;
+import com.example.Volea.repository.EsporteRepository;
 import com.example.Volea.repository.EventoRepository;
 
 @Service
@@ -39,7 +41,14 @@ public class EventoService {
         EventoRepository.deleteById(id);
     }
 
-   
+   //Buscando por ativos e inativos
+   public List<Evento> getEventosAtivos() {
+        return EventoRepository.findByAtivoTrue();
+    }
+
+    public List<Evento> getEventoInativos() {
+        return EventoRepository.findByAtivoFalse();
+    }   
 
 }
     

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -88,6 +89,11 @@ public class Usuario {
 
     @ManyToMany(mappedBy = "alunos")
     private List<Classe> classes;
+
+    @Nullable
+    @OneToMany(mappedBy = "professor")
+    @JsonIgnore
+    private List <Classe> classe;
     
     @ManyToMany(mappedBy = "alunos")
     private List<Evento> eventos;

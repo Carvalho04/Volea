@@ -11,8 +11,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.example.Volea.entity.Aula;
 import com.example.Volea.entity.Classe;
+import com.example.Volea.entity.Esporte;
 import com.example.Volea.repository.AulaRepository;
 import com.example.Volea.repository.ClasseRepository;
+import com.example.Volea.repository.EsporteRepository;
 
 @Service
 public class AulaService {
@@ -58,6 +60,15 @@ public class AulaService {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Turma não encontrada");
         }
+    }
+    
+    //Buscando por ativos e inativos
+   public List<Aula> getAulasAtivos() {
+        return AulaRepository.findByAtivoTrue();
+    }
+
+    public List<Aula> getAulasInativos() {
+        return AulaRepository.findByAtivoFalse();
     }
 }
     

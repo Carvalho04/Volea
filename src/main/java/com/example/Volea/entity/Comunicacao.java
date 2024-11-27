@@ -44,6 +44,9 @@ public class Comunicacao {
     @Column (name = "data_publi")
     private Date dataPublic;
 
+    @Column (name = "ativo", nullable = false)
+    private boolean ativo = true;
+    
 //    @JsonCreator
 //     public Comunicacao(int id) {
 //         this.id = id;

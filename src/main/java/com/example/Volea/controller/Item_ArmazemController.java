@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Volea.dto.Item_ArmazemDTO;
+import com.example.Volea.entity.Aula;
 import com.example.Volea.entity.Item_Armazem;
 import com.example.Volea.repository.Item_ArmazemRepository;
 import com.example.Volea.service.Item_ArmazemService;
@@ -37,6 +38,42 @@ public class Item_ArmazemController {
         Optional<Item_Armazem> item = itemService.findItem_ArmazemById(id);
         return item.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/ativos")
+    public List<Item_Armazem> getItensAtivos() {
+        return itemService.getItensAtivos();
+    }
+
+    @GetMapping("/inativos")
+    public List<Item_Armazem> getItensInativos() {
+        return itemService.getItensInativos();
+    }   
+
+    @PutMapping("/ativar/{id}")
+    public ResponseEntity<Void> ativarItem(@PathVariable int id) {
+        Optional<Item_Armazem> itemOptional = itemService.findItem_ArmazemById(id);
+        if (itemOptional.isPresent()) {
+            Item_Armazem item = itemOptional.get();
+            item.setAtivo(true); 
+            itemService.saveItem_Armazem(item); 
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build(); 
+        }
+    }
+
+    @PutMapping("/desativar/{id}")
+    public ResponseEntity<Void> desativarAula(@PathVariable int id) {
+        Optional<Item_Armazem> itemOptional = itemService.findItem_ArmazemById(id);
+        if (itemOptional.isPresent()) {
+            Item_Armazem item = itemOptional.get();
+            item.setAtivo(false); 
+            itemService.saveItem_Armazem(item);
+            return ResponseEntity.noContent().build(); 
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping

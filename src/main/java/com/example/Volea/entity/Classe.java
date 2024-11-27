@@ -53,10 +53,16 @@ public class Classe {
     @JoinTable(name = "classe_alunos", joinColumns = @JoinColumn(name = "classe_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
     private List<Usuario> alunos;
 
-
+    @Column (name = "ativo", nullable = false)
+    private boolean ativo = true;
+    
     @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn (name = "id_esporte")
     private Esporte esporte;
+
+    @ManyToOne (fetch = FetchType.EAGER)
+    @JoinColumn (name = "id_professor")
+    private Usuario professor;
 
     // @ManyToOne
     // @JoinColumn (name = "id_professor")

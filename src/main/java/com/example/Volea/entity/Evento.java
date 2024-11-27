@@ -45,9 +45,6 @@ public class Evento {
 
     @Column (name = "descricao")
     private String descricao;
-
-    @Column (name = "data_publi")
-    private Date dataPublic;
  
     @Column (name = "data_event")
     private Date dataEvento;
@@ -58,6 +55,9 @@ public class Evento {
     @Column(name = "maxparticipantes")
     private int maxPariticipantes;
 
+    @Column (name = "ativo", nullable = false)
+    private boolean ativo = true;
+    
     @ManyToMany
     @JoinTable(
     name = "evento_aluno",

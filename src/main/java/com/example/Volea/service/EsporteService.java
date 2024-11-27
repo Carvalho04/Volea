@@ -39,7 +39,14 @@ public class EsporteService {
         EsporteRepository.deleteById(id);
     }
 
-   
+   //Buscando por ativos e inativos
+   public List<Esporte> getEsportesAtivos() {
+        return EsporteRepository.findByAtivoTrue();
+    }
+
+    public List<Esporte> getEsportesInativos() {
+        return EsporteRepository.findByAtivoFalse();
+    }
 
 }
     

@@ -39,6 +39,44 @@ public class ArmazemController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    //Listar ativos e inativos
+    @GetMapping("/ativos")
+    public List<Armazem> getArmazemAtivos() {
+        return armazemService.getArmazemAtivos();
+    }
+
+    @GetMapping("/inativos")
+    public List<Armazem> getArmazemInativos() {
+        return armazemService.getArmazemInativos();
+    }
+
+    @PutMapping("/ativar/{id}")
+    public ResponseEntity<Void> ativarArmazem(@PathVariable int id) {
+        Optional<Armazem> armazemOptional = armazemService.findArmazemById(id);
+        if (armazemOptional.isPresent()) {
+            Armazem armazem = armazemOptional.get();
+            armazem.setAtivo(true); 
+            armazemService.saveArmazem(armazem); 
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build(); 
+        }
+    }
+
+    @PutMapping("/desativar/{id}")
+    public ResponseEntity<Void> desativarArmazem(@PathVariable int id) {
+        Optional<Armazem> armazemOptional = armazemService.findArmazemById(id);
+        if (armazemOptional.isPresent()) {
+            Armazem armazem = armazemOptional.get();
+            armazem.setAtivo(false); 
+            armazemService.saveArmazem(armazem);
+            return ResponseEntity.noContent().build(); 
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+
     @PostMapping
     public Armazem createArmazem(@RequestBody Armazem armazem) {
         return armazemService.saveArmazem(armazem);

@@ -43,6 +43,8 @@ public class Item_Armazem {
     @Column(name = "descricao")
     private String descricao;
 
+    @Column (name = "ativo", nullable = false)
+    private boolean ativo = true;
     
     @ManyToOne
     @JoinColumn(name = "item_id")

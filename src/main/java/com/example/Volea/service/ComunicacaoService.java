@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Volea.entity.Comunicacao;
+import com.example.Volea.entity.Esporte;
 import com.example.Volea.repository.ComunicacaoRepository;
+import com.example.Volea.repository.EsporteRepository;
 
 @Service
 public class ComunicacaoService {
@@ -39,6 +41,14 @@ public class ComunicacaoService {
         ComunicacaoRepository.deleteById(id);
     }
 
+    //Buscando por ativos e inativos
+   public List<Comunicacao> getComunicacoesAtivos() {
+        return ComunicacaoRepository.findByAtivoTrue();
+    }
+
+    public List<Comunicacao> getComunicacoesInativos() {
+        return ComunicacaoRepository.findByAtivoFalse();
+    }
    
 
 }

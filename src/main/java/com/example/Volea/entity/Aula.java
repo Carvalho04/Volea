@@ -55,4 +55,7 @@ public class Aula {
         return id;
     }
 
+    @Column (name = "ativo", nullable = false)
+    private boolean ativo = true;
+    
 }

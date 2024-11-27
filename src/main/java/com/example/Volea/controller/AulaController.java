@@ -39,6 +39,43 @@ public class AulaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    //Listar ativos e inativos
+    @GetMapping("/ativos")
+    public List<Aula> getAulaAtivos() {
+        return aulaService.getAulasAtivos();
+    }
+
+    @GetMapping("/inativos")
+    public List<Aula> getAulasInativos() {
+        return aulaService.getAulasInativos();
+    }
+
+    @PutMapping("/ativar/{id}")
+    public ResponseEntity<Void> ativarAula(@PathVariable int id) {
+        Optional<Aula> aulaOptional = aulaService.findAulaById(id);
+        if (aulaOptional.isPresent()) {
+            Aula aula = aulaOptional.get();
+            aula.setAtivo(true); 
+            aulaService.saveAula(aula); 
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build(); 
+        }
+    }
+
+    @PutMapping("/desativar/{id}")
+    public ResponseEntity<Void> desativarAula(@PathVariable int id) {
+        Optional<Aula> aulaOptional = aulaService.findAulaById(id);
+        if (aulaOptional.isPresent()) {
+            Aula aula = aulaOptional.get();
+            aula.setAtivo(false); 
+            aulaService.saveAula(aula);
+            return ResponseEntity.noContent().build(); 
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping
     public Aula createAula(@RequestBody Aula aula) {
         return aulaService.saveAula(aula);
