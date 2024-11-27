@@ -1,11 +1,9 @@
-'use client'
-
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AlertCircle, Trash2, ArrowLeft, Edit, Search } from "lucide-react";
+import { AlertCircle, ArrowLeft, Edit, Search } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import api from "@/service/api";
 import Link from "next/link";
@@ -30,6 +28,8 @@ export function CadastroEsporte() {
   const router = useRouter();
   const [selectedEsporte, setSelectedEsporte] = useState<Esporte | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showActive, setShowActive] = useState(true); // Filtro para exibir apenas ativos
+  const [showInactive, setShowInactive] = useState(false); // Filtro para exibir inativos
 
   useEffect(() => {
     const fetchEsportes = async () => {
@@ -66,14 +66,16 @@ export function CadastroEsporte() {
     });
   };
 
-  const handleExcluir = async (id: number) => {
+  const handleAtivarDesativar = async (id: number, ativo: boolean) => {
     try {
-      await api.delete(`/api/esportes/${id}`);
-      setSubmitStatus('success');
-      setEsportes(prev => prev.filter(esporte => esporte.id !== id));
+      const endpoint = ativo ? `/api/esportes/desativar/${id}` : `/api/esportes/ativar/${id}`;
+      // Realizando a chamada para ativar ou desativar
+      const response = await api.put(endpoint);
+      // Atualizando o estado local com os dados atualizados da API
+      setEsportes(prev => prev.map(e => e.id === id ? { ...e, ativo: !ativo } : e));
     } catch (error) {
       setSubmitStatus('error');
-      setErrorMessage("Erro ao excluir esporte.");
+      setErrorMessage("Erro ao ativar/desativar esporte.");
     }
   };
 
@@ -117,7 +119,10 @@ export function CadastroEsporte() {
 
   const filteredEsportes = esportes.filter((esporte) => {
     const descricao = esporte.descricao || ""; // Garantir que 'descricao' seja uma string válida
-    return descricao.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = descricao.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesStatus =
+      (showActive && esporte.ativo) || (showInactive && !esporte.ativo);
+    return matchesSearch && matchesStatus;
   });
 
   return (
@@ -131,14 +136,13 @@ export function CadastroEsporte() {
               Volea
             </span>
           </Link>
-          <nav>
-            <Button variant="ghost" size="sm" style={{ color: "#f9b800" }}>
-              <ArrowLeft className="h-4 w-4 mr-2" style={{ color: "#f9b800" }} />
-              Voltar
-            </Button>
-          </nav>
+          <Button variant="ghost" size="sm" style={{ color: "#f9b800" }}>
+            <ArrowLeft className="h-4 w-4 mr-2" style={{ color: "#f9b800" }} />
+            Voltar
+          </Button>
         </div>
       </header>
+
   
       {/* Conteúdo principal */}
       <main className="flex-grow container mx-auto p-4 space-y-8">
@@ -188,8 +192,8 @@ export function CadastroEsporte() {
           </CardContent>
         </Card>
   
-        {/* Campo de pesquisa */}
-        <div className="flex items-center space-x-4">
+        {/* Campo de pesquisa e filtro */}
+        <div className="flex items-center space-x-8">
           <div className="relative">
             <Input
               placeholder="Pesquise pelo nome do esporte..."
@@ -199,6 +203,25 @@ export function CadastroEsporte() {
             <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
               <Search className="h-5 w-5" />
             </span>
+          </div>
+          
+          <div>
+            <Label className="h-5 w-5" htmlFor="showActive">Mostrar Ativos:</Label>
+            <input
+              id="showActive"
+              type="checkbox"
+              checked={showActive}
+              onChange={() => setShowActive(!showActive)}
+            />
+          </div>
+          <div>
+            <Label className="h-5 w-5" htmlFor="showInactive">Mostrar Inativos:</Label>
+            <input 
+              id="showInactive"
+              type="checkbox"
+              checked={showInactive}
+              onChange={() => setShowInactive(!showInactive)}
+            />
           </div>
         </div>
   
@@ -221,13 +244,13 @@ export function CadastroEsporte() {
                       onClick={() => handleEditar(esporte)}
                       className="mr-2"
                     >
-                      <Edit className="h-4 w-4" />
+                      <Edit className="h-8 w-4" />
                     </Button>
                     <Button
-                      onClick={() => handleExcluir(esporte.id)}
-                      variant="destructive"
+                      onClick={() => handleAtivarDesativar(esporte.id, esporte.ativo)}
+                      variant={esporte.ativo ? "default" : "destructive"}
                     >
-                      <Trash2 className="h-4 w-4" />
+                      {esporte.ativo ? "Desativar" : "Ativar"}
                     </Button>
                   </div>
                 </CardContent>

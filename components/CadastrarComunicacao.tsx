@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Edit, Trash, ArrowLeft } from "lucide-react";
+import { Edit, ArrowLeft } from "lucide-react";
 import api from "@/service/api";
 import Link from "next/link";
 
@@ -15,6 +15,7 @@ interface Comunicacao {
   nome: string;
   descricao: string;
   dataPublic: string;
+  ativo: boolean; // Campo adicional para definir se a comunicação está ativa
 }
 
 const formatDate = (date: string) => {
@@ -38,6 +39,10 @@ export function CadastroComunicacao() {
   const [comunicacoes, setComunicacoes] = useState<Comunicacao[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedComunicacao, setSelectedComunicacao] = useState<Comunicacao | null>(null);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showActive, setShowActive] = useState(true); // Filtro para exibir apenas ativas
+  const [showInactive, setShowInactive] = useState(false); // Filtro para exibir inativas
 
   // Busca inicial dos dados
   useEffect(() => {
@@ -72,6 +77,7 @@ export function CadastroComunicacao() {
       nome: formData.nome,
       descricao: formData.descricao,
       dataPublic: formData.dataPublic,
+      ativo: true, // Comunicacao sempre criada como ativa
     };
 
     try {
@@ -108,23 +114,36 @@ export function CadastroComunicacao() {
     });
   };
 
-  const handleDelete = async (id: string) => {
+  const handleToggleStatus = async (id: string, ativo: boolean) => {
     try {
-      await api.delete(`/api/comunicacao/${id}`);
-      setComunicacoes((prev) => prev.filter((c) => c.id !== id));
+      const response = await api.put(ativo ? `/api/comunicacao/desativar/${id}` : `/api/comunicacao/ativar/${id}`);
+      
+      setComunicacoes((prev) =>
+        prev.map((comunicacao) =>
+          comunicacao.id === id ? { ...comunicacao, ativo: !ativo } : comunicacao
+        )
+      );
     } catch (error) {
-      console.error("Erro ao excluir comunicação.", error);
+      console.error("Erro ao atualizar status da comunicação.", error);
     }
   };
+    
 
   const handleCancel = () => {
     setFormData({ id: '', nome: '', descricao: '', dataPublic: '' });
     setSelectedComunicacao(null);
   };
 
+  const filteredComunicacoes = comunicacoes.filter((comunicacao) => {
+    const matchesSearch = comunicacao.nome.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesStatus =
+      (showActive && comunicacao.ativo) || (showInactive && !comunicacao.ativo);
+    return matchesSearch && matchesStatus;
+  });
+
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="bg-white shadow-sm">
+    <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="#" prefetch={false} className="flex items-center gap-2">
             <img src="/Logo_Volea.png" alt="Logo Volea" className="h-8" />
@@ -138,6 +157,7 @@ export function CadastroComunicacao() {
           </Button>
         </div>
       </header>
+
 
       <main className="flex-grow container mx-auto p-4 space-y-8">
         {/* Formulário */}
@@ -194,32 +214,66 @@ export function CadastroComunicacao() {
           </CardContent>
         </Card>
 
+        {/* Filtros */}
+        <div className="flex items-center space-x-4">
+          <div className="relative">
+            <Input
+              placeholder="Pesquise pelo nome da comunicação..."
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-4 pr-10"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="showActive">Mostrar Ativas:</Label>
+            <input
+              id="showActive"
+              type="checkbox"
+              checked={showActive}
+              onChange={() => setShowActive(!showActive)}
+            />
+          </div>
+          <div>
+            <Label htmlFor="showInactive">Mostrar Inativas:</Label>
+            <input
+              id="showInactive"
+              type="checkbox"
+              checked={showInactive}
+              onChange={() => setShowInactive(!showInactive)}
+            />
+          </div>
+        </div>
+
         {/* Lista de comunicações */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {comunicacoes.map((comunicacao) => {
-            return (
-            <Card key={comunicacao.id} className="shadow-lg">
-              <CardHeader>
-                <CardTitle>{comunicacao.nome}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p><strong>Descrição:</strong> {comunicacao.descricao}</p>
-                <p><strong>Data:</strong> {formatDate(comunicacao.dataPublic)}</p>
-                <div className="flex space-x-2 mt-4">
-                  <Button variant="outline" size="sm" onClick={() => handleEdit(comunicacao)}>
-                    <Edit className="h-4 w-4 mr-2" />
-                    Editar
-                  </Button>
-                  <Button variant="destructive" size="sm" onClick={() => handleDelete(comunicacao.id)}>
-                    <Trash className="h-4 w-4 mr-2" />
-                    Excluir
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-            )}
+          {filteredComunicacoes.length === 0 ? (
+            <p>Nenhuma comunicação encontrada.</p>
+          ) : (
+            filteredComunicacoes.map((comunicacao) => (
+              <Card key={comunicacao.id} className="shadow-lg">
+                <CardHeader>
+                  <CardTitle>{comunicacao.nome}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p><strong>Descrição:</strong> {comunicacao.descricao}</p>
+                  <p><strong>Data:</strong> {formatDate(comunicacao.dataPublic)}</p>
+                  <div className="flex space-x-2 mt-4">
+                    <Button variant="outline" size="sm" onClick={() => handleEdit(comunicacao)}>
+                      <Edit className="h-4 w-4 mr-2" />
+                      Editar
+                    </Button>
+                    <Button
+                      variant={comunicacao.ativo ? 'outline' : 'destructive'}
+                      size="sm"
+                      onClick={() => handleToggleStatus(comunicacao.id, comunicacao.ativo)}
+                    >
+                      {comunicacao.ativo ? 'Desativar' : 'Ativar'}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
           )}
-
         </div>
       </main>
     </div>

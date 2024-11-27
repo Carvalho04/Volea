@@ -157,12 +157,19 @@ interface Esporte {
   descricao: string;
 }
 
+interface Professor {
+  id: number;
+  nome: string;
+}
+
 interface Turma {
   id: number;
   nome: string;
   descricao: string;
   esporteId: number,
+  professorId: number,
   esporte?: Esporte,
+  professor?: Professor,
 }
 
 
@@ -170,12 +177,14 @@ interface Turma {
 export function CadastroTurma() {
   const [formData, setFormData] = useState({
     esporteId: '', 
+    professorId: '', 
     nome: '',
     descricao:'',
   });
 
   const [turmas, setTurmas] = useState<Turma[]>([]);
   const [esportes, setEsportes] = useState<Esporte[]>([]);
+  const [professores, setProfessores] = useState<Professor[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -199,12 +208,23 @@ export function CadastroTurma() {
         console.log('Esportes:', response.data); // Inspecione os dados
         setEsportes(response.data);
       } catch (error) {
-        console.error("Erro ao carregar itens.", error);
+        console.error("Erro ao carregar esportes.", error);
       }
     };
 
+    const fetchProfessores = async () => {
+      try {
+        const response = await api.get('/api/usuarios/professores/ativos');
+        console.log('Professores:', response.data); // Inspecione os dados
+        setProfessores(response.data); // Corrigido para armazenar os dados de professores.
+      } catch (error) {
+        console.error("Erro ao carregar professores.", error);
+      }
+    };    
+
     fetchTurmas();
     fetchEsportes();
+    fetchProfessores();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -225,11 +245,12 @@ export function CadastroTurma() {
       return;
     }
   
-    // Converta o esporteId para número
     const turma = {
       ...formData,
       esporteId: Number(formData.esporteId),
+      professorId: Number(formData.professorId),
     };
+    
     console.log('Enviando dados da turma:', turma);
     try {
       let response: AxiosResponse<any, any>;
@@ -241,7 +262,7 @@ export function CadastroTurma() {
   
       setTurmas((prev) => [...prev, response.data]);
       setSubmitStatus('success');
-      setFormData({ esporteId: '', nome: '', descricao: '' });
+      setFormData({ esporteId: '', professorId: '', nome: '', descricao: '' });
     } catch (error) {
       setSubmitStatus('error');
       setErrorMessage("Erro ao cadastrar ou editar turma.");
@@ -250,7 +271,7 @@ export function CadastroTurma() {
   };
 
   const handleCancel = () => {
-    setFormData({  esporteId: '', nome: '',descricao:'' });
+    setFormData({  esporteId: '',professorId: '', nome: '',descricao:'' });
     setSelectedTurma(null);
   };
 
@@ -258,6 +279,7 @@ export function CadastroTurma() {
   .map((turma) => ({
     ...turma,
     esporteDescricao: turma.esporte?.descricao || "Desconhecido",
+    professorNome: turma.professor?.nome || "Desconhecido",
   }))
   .filter((turma) =>
     turma.esporteDescricao.toLowerCase().includes(searchQuery.toLowerCase())
@@ -267,7 +289,8 @@ export function CadastroTurma() {
   useEffect(() => {
     if (selectedTurma) {
       setFormData({
-        esporteId: selectedTurma.esporte ? selectedTurma.esporte.id.toString() : '', // Verifique se esporte está presente
+        esporteId: selectedTurma.esporte ? selectedTurma.esporte.id.toString() : '',
+        professorId: selectedTurma.professor? selectedTurma.professor.id.toString() : '', // Verifique se esporte está presente
         nome: selectedTurma.nome,
         descricao: selectedTurma.descricao,
       });
@@ -275,6 +298,7 @@ export function CadastroTurma() {
       // Caso selectedTurma não tenha sido selecionada corretamente, pode-se definir o estado com valores vazios ou tratamento adequado
       setFormData({
         esporteId: '',
+        professorId: '',
         nome: '',
         descricao: '',
       });
@@ -299,6 +323,7 @@ export function CadastroTurma() {
           </Button>
         </div>
       </header>
+
 
       {/* Conteúdo principal */}
       <main className="flex-grow container mx-auto p-4 space-y-8">
@@ -342,8 +367,26 @@ export function CadastroTurma() {
                       </option>
                     ))}
                   </select>
-
-
+                </div>
+                
+                {/* Professor */}
+                <div className="space-y-2">
+                  <Label htmlFor="idProfessor">Professor</Label>
+                  <select
+                    id="idProfessor"
+                    name="professorId"
+                    value={formData.professorId}
+                    onChange={handleChange}
+                    required
+                    className="w-full border border-gray-300 rounded-md p-2"
+                  >
+                    <option value="">Selecione um Professor</option>
+                    {professores.map((professor) => (
+                      <option key={professor.id} value={professor.id}>
+                        {professor.nome}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 {/* Descrição */}
@@ -406,6 +449,7 @@ export function CadastroTurma() {
               <CardContent>
                 <p><strong>Descrição:</strong> {turma.descricao}</p>
                 <p><strong>Esporte:</strong> {turma.esporte?.descricao || "Desconhecido"}</p>
+                <p><strong>Professor:</strong> {turma.professor?.nome || "Desconhecido"}</p>
                 <Button 
                   variant="outline" 
                   size="sm" 

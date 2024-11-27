@@ -277,14 +277,13 @@ export function CadastroAlunos() {
               Volea
             </span>
           </Link>
-          <nav>
-            <Button variant="ghost" size="sm" style={{ color: "#f9b800" }}>
-              <ArrowLeft className="h-4 w-4 mr-2" style={{ color: "#f9b800" }} />
-              Voltar
-            </Button>
-          </nav>
+          <Button variant="ghost" size="sm" style={{ color: "#f9b800" }}>
+            <ArrowLeft className="h-4 w-4 mr-2" style={{ color: "#f9b800" }} />
+            Voltar
+          </Button>
         </div>
       </header>
+
   
       {/* Conteúdo principal */}
       <main className="flex-grow container mx-auto p-4 space-y-8">

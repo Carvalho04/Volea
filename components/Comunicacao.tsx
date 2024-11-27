@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { CalendarDays } from "lucide-react"
+import { ArrowLeft, CalendarDays } from "lucide-react"
 import Link from 'next/link'
 import { useState, useEffect } from 'react';
 import api from "@/service/api"
@@ -21,7 +21,7 @@ export function Comunicacao() {
   useEffect(() => {
     const fetchComunicacoes = async () => {
       try {
-        const response = await api.get('/api/comunicacao');
+        const response = await api.get('/api/comunicacao/ativos');
         setComunicacoes(response.data);
       } catch (error) {
         console.error("Erro ao carregar comunicações.", error);
@@ -33,23 +33,21 @@ export function Comunicacao() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       {/* Header */}
-      <header className="bg-[#114494] border-b shadow-sm sticky top-0 z-40">
-        <div className="container mx-auto px-4 md:px-6 flex justify-between items-center h-16">
-          <Link href="/" className="flex items-center gap-2" prefetch={false}>
-            <img 
-              src="/Logo_Volea.png" 
-              alt="Logo Volea" 
-              className="h-8 w-auto"
-            />
-            <span className="font-bold text-2xl text-[#f9b800]">Volea</span>
+      <header className="bg-white shadow-sm">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <Link href="#" prefetch={false} className="flex items-center gap-2">
+            <img src="/Logo_Volea.png" alt="Logo Volea" className="h-8" />
+            <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>
+              Volea
+            </span>
           </Link>
-          <div>
-            <Button variant="ghost" size="sm" style={{ color: "#f9b800" }}>
-              Home
-            </Button>
-          </div>
+          <Button variant="ghost" size="sm" style={{ color: "#f9b800" }}>
+            <ArrowLeft className="h-4 w-4 mr-2" style={{ color: "#f9b800" }} />
+            Voltar
+          </Button>
         </div>
       </header>
+
 
       {/* Conteúdo */}
       <main className="p-8 flex-grow container mx-auto">

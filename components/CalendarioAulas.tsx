@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import Link from 'next/link'
-import { ChevronLeft, ChevronRight, Plus } from 'lucide-react'
+import { ArrowLeft, ChevronLeft, ChevronRight, Plus } from 'lucide-react'
 import { getWeekDates, formatDate, isSameDay } from '@/lib/date-utils'
 
 // Mock data for classes and schedules
@@ -66,18 +66,21 @@ export function CalendarioAulas() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       {/* Header */}
-      <header className="bg-[#114494] border-b shadow-sm sticky top-0 z-40">
-        <div className="container px-4 md:px-6 flex items-center text-center h-16">
-          <Link href="#" className="mr-6 flex items-center gap-2" prefetch={false}>
-            <img 
-              src="/Logo_Volea.png" 
-              alt="Logo Volea" 
-              className="h-8 w-auto"
-            />
-            <span className="font-bold text-2xl text-[#f9b800]">Volea</span>
+      <header className="bg-white shadow-sm">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <Link href="#" prefetch={false} className="flex items-center gap-2">
+            <img src="/Logo_Volea.png" alt="Logo Volea" className="h-8" />
+            <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>
+              Volea
+            </span>
           </Link>
+          <Button variant="ghost" size="sm" style={{ color: "#f9b800" }}>
+            <ArrowLeft className="h-4 w-4 mr-2" style={{ color: "#f9b800" }} />
+            Voltar
+          </Button>
         </div>
       </header>
+
 
       <div className="p-8 flex-grow">
         <Card className="max-w-6xl mx-auto">

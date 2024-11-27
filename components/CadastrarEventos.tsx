@@ -21,7 +21,7 @@ interface Evento {
 };
 
 interface Professor {
-  id: string;
+  id: number;
   nome: string;
 };
 
@@ -77,8 +77,13 @@ export function CadastroEvento() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    // Converter professorId para número ao atualizar o estado
+    setFormData(prev => ({
+      ...prev,
+      [name]: name === "professorId" ? Number(value) : value,  // Converte para número se for professorId
+    }));
   };
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -136,21 +141,20 @@ export function CadastroEvento() {
   };
   
 
-  const handleEdit = (evento: Evento) => {
-    setSelectedEvento(evento);
-    setFormData({
-      id: evento.id,
-      nome: evento.nome,
-      descricao: evento.descricao,
-      dataEvento: evento.dataEvento,
-      //verificas
-      professorId: evento.dataEvento, 
-      maxParticipantes: evento.maxPariticipantes,
-      participantes: evento.participantes,
+const handleEdit = (evento: Evento) => {
+  setSelectedEvento(evento);
+  setFormData({
+    id: evento.id,
+    nome: evento.nome,
+    descricao: evento.descricao,
+    dataEvento: evento.dataEvento,
+    professorId: evento.professorId.toString(),  // Manter como string aqui para o select
+    maxParticipantes: evento.maxPariticipantes,
+    participantes: evento.participantes,
+  });
+};
 
-    });
-  };
-
+  
   const handleCancel = () => {
     setFormData({
       id: '',
@@ -225,7 +229,7 @@ export function CadastroEvento() {
                   <select
                     id="professorId"
                     name="professorId"
-                    value={formData.professorId}
+                    value={formData.professorId.toString()}  // Garantir que seja convertido para string
                     onChange={handleChange}
                     required
                     className="w-full border border-gray-300 rounded-md p-2"
@@ -237,6 +241,7 @@ export function CadastroEvento() {
                       </option>
                     ))}
                   </select>
+
                 </div>
 
                 {/* Máximo de Participantes */}
@@ -283,7 +288,9 @@ export function CadastroEvento() {
         {/* Exibição dos eventos */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
         {eventos.map((evento) => {
-          const professor = professores.find(p => p.id === String(evento.professorId));
+        const professor = professores.find(p => p.id === evento.professorId);
+        // const professor = professores.find(p => p.id === String(evento.professorId)); 
+
           return (
             <Card key={evento.id} className="shadow-lg">
               <CardHeader>
