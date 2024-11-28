@@ -11,36 +11,40 @@ import api from "@/service/api";
 import Link from "next/link";
 import { AxiosResponse } from 'axios';
 
-interface Material {
+interface Plano {
   id: number;
   descricao: string;
+  nome: string;
+  valor: number,
   ativo: boolean;
 }
 
-export function CadastroMaterial() {
+export function CadastroPlano() {
   const [formData, setFormData] = useState({
     descricao: '',
+    nome:'',
+    valor:'',
   });
 
-  const [materiais, setMateriais] = useState<Material[]>([]);
+  const [planos, setPlanos] = useState<Plano[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [selectedMaterial, setSelectedMaterial] = useState<Material | null>(null);
+  const [selectedPlano, setSelectedPlano] = useState<Plano | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showActive, setShowActive] = useState(true); // Filtro para exibir apenas ativos
   const [showInactive, setShowInactive] = useState(false); // Filtro para exibir inativos
 
   useEffect(() => {
-    const fetchMateriais = async () => {
+    const fetchPlanos = async () => {
       try {
-        const response = await api.get('/api/itens');
-        setMateriais(response.data);
+        const response = await api.get('/api/planos');
+        setPlanos(response.data);
       } catch (error) {
-        console.error("Erro ao carregar materiais", error);
+        console.error("Erro ao carregar planos", error);
       }
     };
-    fetchMateriais();
+    fetchPlanos();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,21 +52,23 @@ export function CadastroMaterial() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleEditar = (material: Material) => {
-    setSelectedMaterial(material); 
+  const handleEditar = (plano: Plano) => {
+    setSelectedPlano(plano); 
     setFormData({
-      descricao: material.descricao,
+      descricao: plano.descricao,
+      nome: plano.nome,
+      valor: String(plano.valor),
     });
   };
 
   const handleAtivarDesativar = async (id: number, ativo: boolean) => {
     try {
-      const endpoint = ativo ? `/api/itens/desativar/${id}` : `/api/itens/ativar/${id}`;
+      const endpoint = ativo ? `/api/planos/desativar/${id}` : `/api/planos/ativar/${id}`;
       const response = await api.put(endpoint);
-      setMateriais(prev => prev.map(m => m.id === id ? { ...m, ativo: !ativo } : m));
+      setPlanos(prev => prev.map(m => m.id === id ? { ...m, ativo: !ativo } : m));
     } catch (error) {
       setSubmitStatus('error');
-      setErrorMessage("Erro ao ativar/desativar material.");
+      setErrorMessage("Erro ao ativar/desativar plano.");
     }
   };
 
@@ -81,34 +87,37 @@ export function CadastroMaterial() {
   
     try {
       let response: AxiosResponse<any, any>;
-      if (selectedMaterial) {
-        response = await api.put(`/api/itens/${selectedMaterial.id}`, formData);
-        setMateriais(prev =>
-          prev.map((material) =>
-            material.id === selectedMaterial.id ? response.data : material
+      if (selectedPlano) {
+        response = await api.put(`/api/planos/${selectedPlano.id}`, formData);
+        setPlanos(prev =>
+          prev.map((plano) =>
+            plano.id === selectedPlano.id ? response.data : plano
           )
         );
-        setSelectedMaterial(null);
+        setSelectedPlano(null);
       } else {
-        response = await api.post('/api/itens', formData);
-        setMateriais(prev => [...prev, response.data]);
+        response = await api.post('/api/planos', formData);
+        setPlanos(prev => [...prev, response.data]);
       }
       setSubmitStatus('success');
-      setFormData({ descricao: '' });
+      setFormData({ descricao: '', nome:'', valor:''});
     } catch (error) {
       setSubmitStatus('error');
-      setErrorMessage("Erro ao cadastrar ou editar material.");
+      setErrorMessage("Erro ao cadastrar ou editar plano.");
     }
     setIsSubmitting(false);
   };
 
-  const filteredMateriais = materiais.filter((material) => {
-    const descricao = material.descricao || "";
+  const filteredPlanos = planos.filter((plano) => {
+    const descricao = plano.descricao || "";
     const matchesSearch = descricao.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus =
-      (showActive && material.ativo) || (showInactive && !material.ativo);
+    const matchesStatus = 
+      (showActive && plano.ativo) || 
+      (showInactive && !plano.ativo) || 
+      (!showActive && !showInactive); // Retorna tudo caso nenhum filtro esteja ativo
     return matchesSearch && matchesStatus;
   });
+  
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -131,11 +140,21 @@ export function CadastroMaterial() {
         <Card style={{ backgroundColor: "#f4e7c3" }}>
           <CardHeader>
             <CardTitle className="text-2xl font-bold">
-              {selectedMaterial ? 'Editar Material' : 'Cadastrar Material'}
+              {selectedPlano ? 'Editar Plano' : 'Cadastrar Plano'}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="nome">Nome</Label>
+                <Input
+                  id="nome"
+                  name="nome"
+                  value={formData.nome}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
               <div className="space-y-2">
                 <Label htmlFor="descricao">Descrição</Label>
                 <Input
@@ -145,17 +164,27 @@ export function CadastroMaterial() {
                   onChange={handleChange}
                   required
                 />
+              </div>              
+              <div className="space-y-2">
+                <Label htmlFor="valor">Valor</Label>
+                <Input
+                  id="valor"
+                  name="valor"
+                  type='number'
+                  value={formData.valor}
+                  onChange={handleChange}
+                  required
+                />
               </div>
-
               <Button type="submit" disabled={isSubmitting || !formData.descricao} className="w-full md:w-auto mt-4">
-                {selectedMaterial ? 'Salvar Alterações' : 'Cadastrar'}
+                {selectedPlano ? 'Salvar Alterações' : 'Cadastrar'}
               </Button>
               
               <Button
                 type="button"
                 onClick={() => {
-                  setSelectedMaterial(null);
-                  setFormData({ descricao: '' });
+                  setSelectedPlano(null);
+                  setFormData({ descricao: '', nome:'', valor:'' });
                 }}
                 className="w-full md:w-auto mt-4"
               >
@@ -168,7 +197,7 @@ export function CadastroMaterial() {
         <div className="flex items-center space-x-8">
           <div className="relative">
             <Input
-              placeholder="Pesquise pelo nome do material..."
+              placeholder="Pesquise pelo nome do plano..."
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-4 pr-10"
             />
@@ -182,7 +211,10 @@ export function CadastroMaterial() {
               id="showActive"
               type="checkbox"
               checked={showActive}
-              onChange={() => setShowActive(!showActive)}
+              onChange={() => {
+                setShowActive(!showActive);
+                if (!showActive) setShowInactive(false); // Desmarca o outro automaticamente
+              }}
             />
           </div>
           <div>
@@ -191,35 +223,41 @@ export function CadastroMaterial() {
               id="showInactive"
               type="checkbox"
               checked={showInactive}
-              onChange={() => setShowInactive(!showInactive)}
+              onChange={() => {
+                setShowInactive(!showInactive);
+                if (!showInactive) setShowActive(false); // Desmarca o outro automaticamente
+              }}
             />
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredMateriais.length === 0 ? (
+          {filteredPlanos.length === 0 ? (
             <Alert>
               <AlertCircle className="h-5 w-5" />
-              <AlertDescription>Nenhum material encontrado.</AlertDescription>
+              <AlertDescription>Nenhum plano encontrado.</AlertDescription>
             </Alert>
           ) : (
-            filteredMateriais.map((material) => (
-              <Card key={material.id}>
+            filteredPlanos.map((plano) => (
+              <Card key={plano.id}>
                 <CardHeader>
-                  <CardTitle>{material.descricao}</CardTitle>
+                  <CardTitle>{plano.nome || "Sem Nome"}</CardTitle>
                 </CardHeader>
                 <CardContent className="flex justify-between items-center">
+                  <div>Descrição: {plano.descricao || "Sem Descrição"}</div>
+                  <div>Valor: {plano.valor || "0"}</div>
                   <div>
-                    <Button onClick={() => handleEditar(material)} className="mr-2">
+                    <Button onClick={() => handleEditar(plano)} className="mr-2">
                       <Edit className="h-4 w-4" />
                     </Button>
                     <Button
-                      onClick={() => handleAtivarDesativar(material.id, material.ativo)}
-                      variant={material.ativo ? "default" : "destructive"}
+                      onClick={() => handleAtivarDesativar(plano.id, plano.ativo)}
+                      variant={plano.ativo ? "default" : "destructive"}
                     >
-                      {material.ativo ? "Desativar" : "Ativar"}
+                      {plano.ativo ? "Desativar" : "Ativar"}
                     </Button>
                   </div>
+
                 </CardContent>
               </Card>
             ))
