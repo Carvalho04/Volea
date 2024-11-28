@@ -41,18 +41,18 @@ public class Plano {
     private float valor;
 
     @Column(name = "descricao")
-    private String desc;
+    private String descricao;
     
 
     @Column (name = "ativo", nullable = false)
     private boolean ativo = true;
     
-    @JsonCreator
-    public Plano(int id) {
-        this.id = id;
-    }
-    @JsonValue
-    public int getIdJson() {
-        return id;
-    }
+    // @JsonCreator
+    // public Plano(int id) {
+    //     this.id = id;
+    // }
+    // @JsonValue
+    // public int getIdJson() {
+    //     return id;
+    // }
 }

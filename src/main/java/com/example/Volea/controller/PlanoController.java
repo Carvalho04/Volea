@@ -98,8 +98,8 @@ public class PlanoController {
             if (planoDTO.getNome() != null) {
                 existingPlano.setNome(planoDTO.getNome());
             }
-            if (planoDTO.getDesc() != null) {
-                existingPlano.setDesc(planoDTO.getDesc());
+            if (planoDTO.getDescricao() != null) {
+                existingPlano.setDescricao(planoDTO.getDescricao());
             }
             if (planoDTO.getValor() >  0 ) {
                 existingPlano.setValor(planoDTO.getValor());

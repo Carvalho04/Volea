@@ -47,7 +47,6 @@ public class Item_Armazem {
     private boolean ativo = true;
     
     @ManyToOne
-    @JoinColumn(name = "item_id")
     @JsonBackReference
     private Armazem armazem;
   

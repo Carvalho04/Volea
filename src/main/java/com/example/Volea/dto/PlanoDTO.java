@@ -9,6 +9,6 @@ public class PlanoDTO {
     
     private String nome;
     private float valor;
-    private String desc;
+    private String descricao;
     
 }
