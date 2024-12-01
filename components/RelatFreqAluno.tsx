@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import Link from 'next/link'
 //import { Calendar, Download } from 'lucide-react'
-import { Calendar } from 'lucide-react'
+import { ArrowLeft, Calendar } from 'lucide-react'
 
 
 // Mock data for students and their attendance

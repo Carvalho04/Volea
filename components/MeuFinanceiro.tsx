@@ -20,23 +20,23 @@ import { ArrowLeft } from "lucide-react"
 const mockData: Payment[] = [
   {
     id: '1',
-    student: 'Alice Johnson',
-    value: 50,
-    dueDate: '2023-06-15',
-    paymentDate: '2023-06-14',
+    student: 'Henry Matheus Rodrigues',
+    value: 143.10,
+    dueDate: '2023-06-10',
+    paymentDate: '2023-06-04',
   },
   {
     id: '2',
-    student: 'Alice Johnson',
-    value: 50,
-    dueDate: '2023-07-15',
-    paymentDate: '2023-07-19',
+    student: 'Henry Matheus Rodrigues',
+    value: 143.10,
+    dueDate: '2023-07-10',
+    paymentDate: '2023-07-05',
   },
   {
     id: '3',
-    student: 'Alice Johnson',
-    value: 50,
-    dueDate: '2023-06-25',
+    student: 'Henry Matheus Rodrigues',
+    value: 150.00,
+    dueDate: '2023-08-10',
     paymentDate: null,
   },
 ]
@@ -81,15 +81,7 @@ export default function PaymentInquiryScreen() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex justify-between items-center mb-4">
-              <Input
-                placeholder="Pesquisar por nome do aluno"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="max-w-sm"
-              />
-              <Button onClick={handleExtractReport}>Extrair Meu Relatório Financeiro</Button>
-            </div>
+
 
             <div className="rounded-md border">
               <Table>

@@ -259,11 +259,12 @@ export function CadastroAlunos() {
   
 
   const filteredAlunos = alunos.filter((aluno) => {
-    const matchesQuery = aluno.nome.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesQuery = aluno.nome && aluno.nome.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus =
       (showAtivos && aluno.ativo) || (showInativos && !aluno.ativo);
     return matchesQuery && matchesStatus;
   });
+  
 
 
   return (

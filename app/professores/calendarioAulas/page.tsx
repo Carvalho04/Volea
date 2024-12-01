@@ -1,10 +1,10 @@
 'use client';
-import { CalendarioAulas } from "@/components/CalendarioAulas";
+import { CadastrarAula } from "@/components/CadastrarAula";
 
-export default function CalendarioAu() {
+export default function Aulau() {
     return (
       <div>
-        <CalendarioAulas/>
+        <CadastrarAula/>
       </div>
     );
   }

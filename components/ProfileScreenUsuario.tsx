@@ -12,6 +12,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Link from "next/link";
 import api from "@/service/api";
 import { useAuth } from "@/context/AuthContext";
+import { TableBody, TableCell, TableRow } from './ui/table';
 
 interface Usuario {
   id: number;
@@ -55,6 +56,38 @@ export function PerfilUsuario() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
+  const disciplinas = [
+    { codigo: "16", nome: "Vôlei Sábados"},
+    { codigo: "17", nome: "Futebol Sexta Feira"},
+    { codigo: "18", nome: "Tênis de Mesa Domingos"},
+    { codigo: "19", nome: "Basquete Todo dia"},
+  ]
+  const payment = [
+    {
+      id: '1',
+      student: 'Henry Matheus Rodrigues',
+      value: 143.10,
+      dueDate: '2023-06-10',
+      paymentDate: '2023-06-04',
+
+    },
+    {
+      id: '2',
+      student: 'Henry Matheus Rodrigues',
+      value: 143.10,
+      dueDate: '2023-07-10',
+      paymentDate: '2023-07-05',
+    },
+    {
+      id: '3',
+      student: 'Henry Matheus Rodrigues',
+      value: 150.00,
+      dueDate: '2023-08-10',
+      paymentDate: 'Pendente',
+    },
+  ]
+  
+  
   useEffect(() => {
     if (isLoading || !user) return;
 
@@ -203,14 +236,14 @@ export function PerfilUsuario() {
           <CardTitle>Minhas Turmas</CardTitle>
         </CardHeader>
         <CardContent>
-          {/* <ul> */}
-            {/* {turmas.map(turma => ( */}
-              {/* <li key={turma.id} className="flex justify-between"> */}
-                {/* <span>{turma.nome}</span> */}
-                {/* <Badge>{turma.status}</Badge> */}
-              {/* </li> */}
-            {/* ))} */}
-          {/* </ul> */}
+        <TableBody>
+        {disciplinas.map((disciplina) => (
+          <TableRow key={disciplina.codigo}>
+            <TableCell className="text-6">{disciplina.codigo}</TableCell>
+            <TableCell className="text-6">{disciplina.nome}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
         </CardContent>
       </Card>
 
@@ -220,34 +253,19 @@ export function PerfilUsuario() {
           <CardTitle>Meus Pagamentos</CardTitle>
         </CardHeader>
         <CardContent>
-          {/* <ul> */}
-            {/* {pagamentos.map(pagamento => ( */}
-              {/* <li key={pagamento.id} className="flex justify-between"> */}
-                {/* <span>{pagamento.descricao}</span> */}
-                {/* <span classNam/e="font-bold">{`R$ ${pagamento.valor.toFixed(2)}`}</span> */}
-              {/* // </li> */}
-            {/* ))} */}
-          {/* </ul> */}
+        <TableBody>
+        {payment.map((payment) => (
+          <TableRow key={payment.id}>
+            <TableCell className="text-6">Valor: {payment.value}</TableCell>
+            <TableCell className="text-6">Vencimento: {payment.dueDate}</TableCell>
+            <TableCell className="text-6">Pagamento: {payment.paymentDate}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
         </CardContent>
       </Card>
 
-      {/* Minhas Notificações */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Minhas Notificações</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {/* {notificacoes.map(notificacao => ( */}
-            {/* <Alert key={notificacao.id}> */}
-              {/* <AlertCircle className="h-5 w-5" /> */}
-              {/* <AlertTitle>{notificacao.titulo}</AlertTitle> */}
-              {/* <AlertDescription> */}
-                {/* {notificacao.descricao} {notificacao.link && <Link href={notificacao.link}>Saiba mais</Link>} */}
-              {/* </AlertDescription> */}
-            {/* </Alert> */}
-          {/* ))} */}
-        </CardContent>
-      </Card>
+  
 
 
      

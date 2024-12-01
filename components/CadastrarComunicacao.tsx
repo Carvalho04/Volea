@@ -15,7 +15,7 @@ interface Comunicacao {
   nome: string;
   descricao: string;
   dataPublic: string;
-  ativo: boolean; // Campo adicional para definir se a comunicação está ativa
+  ativo: boolean; 
 }
 
 const formatDate = (date: string) => {

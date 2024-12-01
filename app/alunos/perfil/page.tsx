@@ -9,13 +9,13 @@
 //     );
 // }
 'use client'
-import { ProfileScreen } from "@/components/ProfileScreen";
+import { PerfilUsuario } from "@/components/ProfileScreenUsuario";
 
 export default function PaginaPerfil() {
 
   return (
       <div>
-        <ProfileScreen />
+        <PerfilUsuario />
       </div>
     );
 }

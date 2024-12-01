@@ -17,11 +17,11 @@ type Column = {
 export const columns: Column[] = [
   {
     key: "student",
-    header: "Student",
+    header: "Aluno",
   },
   {
     key: "value",
-    header: "Value",
+    header: "Valor",
     render: (payment: Payment) => {
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
@@ -32,16 +32,16 @@ export const columns: Column[] = [
   },
   {
     key: "dueDate",
-    header: "Due Date",
+    header: "Vencimento",
   },
   {
     key: "paymentDate",
-    header: "Payment Date",
+    header: "Data do Pagamento",
     render: (payment: Payment) => {
       return payment.paymentDate ? (
         <div>{payment.paymentDate}</div>
       ) : (
-        <div className="text-red-500">Pending</div>
+        <div className="text-red-500">Pendente</div>
       )
     },
   },
