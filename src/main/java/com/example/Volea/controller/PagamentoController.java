@@ -1,10 +1,14 @@
 package com.example.Volea.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Volea.dto.PagamentoDTO;
 import com.example.Volea.entity.Pagamento;
+import com.example.Volea.entity.Usuario;
 import com.example.Volea.repository.PagamentoRepository;
+import com.example.Volea.repository.UsuarioRepository;
 import com.example.Volea.service.PagamentoService;
 
 @RestController
@@ -27,6 +33,11 @@ public class PagamentoController {
     @Autowired
     private PagamentoService pagamentoService;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    private PagamentoRepository pagamentoRepository;
+    
     @GetMapping
     public List<Pagamento> getAllPagamentos() {
         return pagamentoService.findAllPagamento();
@@ -76,10 +87,40 @@ public class PagamentoController {
     }
 
 
+    // @PostMapping
+    // public Pagamento createPagamento(@RequestBody Pagamento pagamento) {
+    //     return pagamentoService.savePagamento(pagamento);
+    // }
     @PostMapping
-    public Pagamento createPagamento(@RequestBody Pagamento pagamento) {
-        return pagamentoService.savePagamento(pagamento);
+    public ResponseEntity<String> criarPagamento(@RequestBody Map<String, Object> payload) {
+        try {
+            // Recupera o alunoId do payload
+            int alunoId = Integer.parseInt(payload.get("alunoId").toString());
+
+            // Cria o DTO para o pagamento
+            PagamentoDTO pagamentoDTO = new PagamentoDTO();
+            pagamentoDTO.setPlanoId(Integer.parseInt(payload.get("planoId").toString()));
+            pagamentoDTO.setDescontoId(Integer.parseInt(payload.get("descontoId").toString()));
+            pagamentoDTO.setValorImposto(Double.parseDouble(payload.get("valorImposto").toString()));
+            pagamentoDTO.setValorTotal(Double.parseDouble(payload.get("valorTotal").toString()));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            pagamentoDTO.setDataVencimento(sdf.parse(payload.get("dataVencimento").toString()));
+            pagamentoDTO.setDataPagamento(sdf.parse(payload.get("dataPagamento").toString()));
+            pagamentoDTO.setStatus(payload.get("status").toString());
+
+            // Chama o serviço para criar o pagamento e passa o alunoId
+            pagamentoService.criarPagamento(pagamentoDTO, alunoId);
+
+            // Retorna uma resposta com status 201 (Created)
+            return ResponseEntity.status(HttpStatus.CREATED).body("Pagamento criado com sucesso");
+
+        } catch (Exception e) {
+            // Em caso de erro, retorna uma resposta com status 400 (Bad Request)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao criar pagamento: " + e.getMessage());
+        }
     }
+    
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePagamento(@PathVariable int id) {
@@ -95,12 +136,7 @@ public class PagamentoController {
             Pagamento existingPagamento = existingPagamentoOptional.get();
 
             // Atualize apenas os campos que não são nulos no DTO
-            if (pagamentoDTO.getValorOriginal() > 0) {
-                existingPagamento.setValorOriginal(pagamentoDTO.getValorOriginal());
-            }
-            if (pagamentoDTO.getValorDesconto() > 0) {
-                existingPagamento.setValorDesconto(pagamentoDTO.getValorDesconto());
-            }
+
             if (pagamentoDTO.getValorImposto() > 0) {
                 existingPagamento.setValorImposto(pagamentoDTO.getValorImposto());
             }

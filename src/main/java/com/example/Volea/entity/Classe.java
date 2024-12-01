@@ -2,9 +2,12 @@ package com.example.Volea.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,56 +35,46 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 
-
 @Entity
 @Table(name = "classe")
-public class Classe {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 
+public class Classe {
 
     @Id  
     @Column(name = "id", updatable = false, nullable = false) 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @Column (name = "nome")
+    @Column(name = "nome")
     private String nome;
     
-    @Column (name = "descricao")
+    @Column(name = "descricao")
     private String descricao;
 
+    @JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class, 
+    property = "id")
     @ManyToMany
-    @JoinTable(name = "classe_alunos", joinColumns = @JoinColumn(name = "classe_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+    @JoinTable(name = "classe_alunos", 
+               joinColumns = @JoinColumn(name = "classe_id"), 
+               inverseJoinColumns = @JoinColumn(name = "usuario_id"))
     private List<Usuario> alunos;
+    
 
-    @Column (name = "ativo", nullable = false)
+    @Column(name = "ativo", nullable = false)
     private boolean ativo = true;
     
-    @ManyToOne (fetch = FetchType.EAGER)
-    @JoinColumn (name = "id_esporte")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference(value="classe-esporte")
+    @JoinColumn(name = "id_esporte")
     private Esporte esporte;
 
-    @ManyToOne (fetch = FetchType.EAGER)
-    @JoinColumn (name = "id_professor")
-    private Usuario professor;
-
-    // @ManyToOne
-    // @JoinColumn (name = "id_professor")
-    // private Usuario idProfessor;
-
-    @OneToMany (mappedBy = "classe")
-    private List <Aula> aulas;
+    @OneToMany(mappedBy = "classe")
+    @JsonManagedReference(value="classe-aula")
+    private List<Aula> aulas;
     
-    @OneToMany (mappedBy = "classe")
-    private List <Chamada> chamadas;
-
-    // @JsonCreator
-    // public Classe(int id) {
-    //     this.id = id;
-    // }
-    // @JsonValue
-    // public int getIdJson() {
-    //     return id;
-    // }
-
-
+    @OneToMany(mappedBy = "classe")
+    @JsonManagedReference(value="classe-chamada")
+    private List<Chamada> chamadas;
 }

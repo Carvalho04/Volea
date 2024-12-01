@@ -1,9 +1,5 @@
 package com.example.Volea.dto;
 
-import java.util.stream.Collectors;
-
-import com.example.Volea.entity.Classe;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,13 +7,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class ClasseDTO {
-    
-    private int id;
+@NoArgsConstructor
+public class AulaRequestDTO {
     private String nome;
-    private String descricao;
-    private int esporteId;
-
+    private String data;
+    private int classeId;
+    private int professorId;
+    private boolean ativo;
 }

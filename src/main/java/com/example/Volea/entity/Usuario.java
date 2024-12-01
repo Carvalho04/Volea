@@ -5,9 +5,12 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import io.micrometer.common.lang.Nullable;
@@ -35,6 +38,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.Builder.Default;
 
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -42,13 +46,11 @@ import lombok.Builder.Default;
 @EqualsAndHashCode
 @ToString
 
-
-
 @Entity
-@Table (name = "users")
+@Table(name = "users")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Usuario {
-    
 
     @Id  
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,35 +58,37 @@ public class Usuario {
     private int id;
     
     @NotNull(message = "O nome é obrigatório")
-    @Column (name = "nome")
+    @Column(name = "nome")
     private String nome;
 
     @Email(message = "Email inválido")
     @NotNull(message = "O email é obrigatório")
-    @Column (name = "email")
+    @Column(name = "email")
     private String email;
 
     @NotNull(message = "O Cpf é obrigatório")
-    @Column (name = "cpf")
+    @Column(name = "cpf")
     private String cpf;
 
-    @Column (name = "pass")
+    @Column(name = "pass")
     @NotNull(message = "A senha é obrigatória")
     @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres")
     private String pass;
 
     @Temporal(TemporalType.DATE)
-    @Column (name = "data_nasc")
+    @Column(name = "data_nasc")
     private Date dataNasc;
 
-    @Column (name = "ativo", nullable = false)
+    @Column(name = "ativo", nullable = false)
     private boolean ativo = true;
 
     @ManyToOne(fetch = FetchType.EAGER) 
+    @JsonBackReference (value="usuario-tipo")   
     @JoinColumn(name = "tp_user_id")
     private Tp_Usuario tipo;
 
-    @OneToMany (mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario")
+    @JsonManagedReference(value="usuario-pagamento")
     private List<Pagamento> pagamentos;
 
     @ManyToMany(mappedBy = "alunos")
@@ -92,18 +96,17 @@ public class Usuario {
 
     @Nullable
     @OneToMany(mappedBy = "professor")
-    @JsonIgnore
-    private List <Classe> classe;
-    
+    @JsonManagedReference(value="usuario-aula")
+    private List<Aula> aula;
+
     @ManyToMany(mappedBy = "alunos")
     private List<Evento> eventos;
-        // @JsonCreator
-        // public Usuario(int id) {
-        //     this.id = id;    
-        // }
-        // @JsonValue
-        // public int getIdJson() {
-        //     return id;
-        // }
+
+    @Override
+    public String toString() {
+    return "Usuario{id=" + id + ", nome='" + nome + "', email='" + email + "'}";
+}
 
 }
+
+

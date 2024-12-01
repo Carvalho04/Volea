@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.micrometer.common.lang.Nullable;
@@ -43,7 +44,7 @@ public class Esporte {
     
     @Nullable
     @OneToMany(mappedBy = "esporte")
-    @JsonIgnore
+    @JsonManagedReference (value="classe-esporte")
     private List <Classe> classes;
 
     public Esporte(int id) {

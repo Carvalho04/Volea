@@ -2,6 +2,7 @@ package com.example.Volea.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
@@ -43,6 +44,7 @@ public class Chamada {
     private boolean presence;
 
     @ManyToOne
+    @JsonBackReference(value="classe-chamada")
     @JoinColumn (name = "classe_id")
     private Classe classe;
 

@@ -95,19 +95,11 @@ public class ClasseController {
     classe.setNome(classeDTO.getNome());
     classe.setDescricao(classeDTO.getDescricao());
 
-    // Busca o Esporte pelo ID
     Esporte esporte = esporteRepository.findById(classeDTO.getEsporteId())
             .orElseThrow(() -> new IllegalArgumentException("Esporte não encontrado com ID: " + classeDTO.getEsporteId()));
 
-    // Associa o Esporte à Classe
     classe.setEsporte(esporte);
 
-    // Busca o Esporte pelo ID
-    Usuario professor = usuarioRepository.findById(classeDTO.getProfessorId())
-    .orElseThrow(() -> new IllegalArgumentException("Professor não encontrado com ID: " + classeDTO.getProfessorId()));
-
-    // Associa o Esporte à Classe
-    classe.setProfessor(professor);
 
     // Salva a Classe no banco de dados
     Classe savedClasse = classeService.saveClasse(classe);

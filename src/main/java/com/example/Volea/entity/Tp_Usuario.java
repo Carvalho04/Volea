@@ -3,6 +3,7 @@ package com.example.Volea.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import jakarta.persistence.Column;
@@ -26,7 +27,6 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 
-
 @Entity
 @Table(name = "tp_user")
 public class Tp_Usuario {
@@ -39,16 +39,18 @@ public class Tp_Usuario {
     @Column(name = "descricao")
     private String descricao;
 
-    @OneToMany (mappedBy = "tipo")
-    private List <Usuario> usuarios;
+    @OneToMany(mappedBy = "tipo")
+    @JsonManagedReference(value="usuario-tipo")
+    private List<Usuario> usuarios;
 
     @JsonCreator
     public Tp_Usuario(int id) {
         this.id = id;
     }
+
     @JsonValue
     public int getIdJson() {
         return id;
     }
-
 }
+

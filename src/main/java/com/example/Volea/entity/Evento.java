@@ -3,8 +3,12 @@ package com.example.Volea.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
@@ -33,6 +37,7 @@ import lombok.ToString;
 
 @Entity
 @Table (name = "events")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Evento {
     
     @Id  
