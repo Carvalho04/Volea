@@ -38,10 +38,37 @@ public class PagamentoController {
 
     private PagamentoRepository pagamentoRepository;
     
+    // @GetMapping
+    // public List<Pagamento> getAllPagamentos() {
+    //     List<Pagamento> pagamentos = pagamentoService.findAllPagamento();
+    //     pagamentos.forEach(System.out::println);
+    //     return pagamentoService.findAllPagamento();
+    // }
+
     @GetMapping
-    public List<Pagamento> getAllPagamentos() {
-        return pagamentoService.findAllPagamento();
+    public List<PagamentoDTO> getAllPagamentos() {
+        return pagamentoService.findAllPagamento().stream().map(p -> {
+            PagamentoDTO dto = new PagamentoDTO();
+            dto.setId(p.getId());
+            dto.setValorImposto(p.getValorImposto());
+            dto.setValorTotal(p.getValorTotal());
+            dto.setDataVencimento(p.getDataVencimento());
+            dto.setDataPagamento(p.getDataPagamento());
+
+            // Deriva o status com base no valor de "ativo"
+            dto.setStatus(p.isAtivo() ? "pendente" : "pago");
+
+            dto.setAtivo(p.isAtivo()); // Mantém o campo "ativo" se necessário
+
+            // Mapeando os nomes
+            dto.setPlanoNome(p.getPlano() != null ? p.getPlano().getNome() : "Plano desconhecido");
+            dto.setAlunoNome(p.getUsuario() != null ? p.getUsuario().getNome() : "Aluno desconhecido");
+            dto.setDescontoNome(p.getDesconto() != null ? p.getDesconto().getDescricao() : "Sem desconto");
+
+            return dto;
+        }).toList();
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Pagamento> getPagamentoById(@PathVariable int id) {

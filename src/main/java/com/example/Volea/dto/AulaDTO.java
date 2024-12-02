@@ -14,6 +14,8 @@ public class AulaDTO {
     private Date data;
     private int classeId; 
     private int professorId;
+    private String classeNome;
+    private String professorNome;   
     private boolean ativo;
 
 }
