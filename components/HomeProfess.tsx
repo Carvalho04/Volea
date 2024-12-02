@@ -9,288 +9,369 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { JSX, SVGProps } from "react"
 
+// export function HomeProfess() {
+//   return (
+//     <div className="flex flex-col min-h-screen text-center">
+//     <header className="bg-white shadow-sm">
+//      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+//        <Link href="#" prefetch={false} className="flex items-center gap-2">
+//          <img src="/Logo_Volea.png" alt="Logo Volea" className="h-8" />
+//          <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>
+//            Volea 
+//          </span>
+//        </Link>
+//        <nav className="ml-auto flex items-center gap-4 md:gap-6">
+//             <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false} style={{ color: "#f9b800" }}>
+//               Turmas
+//             </Link>
+//             <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false} style={{ color: "#f9b800" }}>
+//               Alunos
+//             </Link>
+//             <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false} style={{ color: "#f9b800" }}>
+//               Eventos
+//             </Link>
+//             <DropdownMenu>
+//               <DropdownMenuTrigger asChild>
+//                 <Button variant="ghost" className="flex items-center gap-1" style={{ color: "#f9b800" }}>
+//                   Mais
+//                   <ChevronDownIcon className="h-4 w-4" style={{ color: "#f9b800" }} />
+//                 </Button>
+//               </DropdownMenuTrigger>
+//               <DropdownMenuContent align="end" className="bg-[#114494] text-[#f9b800]">
+//                 <DropdownMenuItem>
+//                   <Link href="#" prefetch={false} style={{ color: "#f9b800" }}>
+//                     Comunicados
+//                   </Link>
+//                 </DropdownMenuItem>
+//                 <DropdownMenuItem>
+//                   <Link href="#" prefetch={false} style={{ color: "#f9b800" }}>
+//                     Aulas
+//                   </Link>
+//                 </DropdownMenuItem>
+//                 <DropdownMenuItem>
+//                   <Link href="#" prefetch={false} style={{ color: "#f9b800" }}>
+//                     Armazém
+//                   </Link>
+//                 </DropdownMenuItem>
+//               </DropdownMenuContent>
+//             </DropdownMenu>
+//           </nav>
+//      </div>
+//    </header>
+
+    
+//       <main className="flex-1 p-6 md:p-10">
+//         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+//           <Card  className="bg-[#fff6d8]">
+//             <CardHeader>
+//               <CardTitle>Alunos</CardTitle>
+//               <CardDescription>Ver Meus Alunos</CardDescription>
+//             </CardHeader>
+//             <CardContent>
+//               <div className="flex flex-col gap-2">
+//                 <div className="flex items-center justify-between">
+//                   <div className="flex items-center gap-2">
+//                     <Avatar>
+//                       <AvatarImage src="/placeholder-user.jpg" alt="Professor João" />
+//                       <AvatarFallback>PS</AvatarFallback>
+//                     </Avatar>
+//                     <div>
+//                       <h4 className="font-medium">João Pedro</h4>
+//                       <p className="text-sm text-muted-foreground">Turma Vôlei A</p>
+//                     </div>
+//                   </div>
+//                   <Button variant="ghost" size="icon">
+//                     <ExpandIcon className="h-5 w-5" />
+//                   </Button>
+//                 </div>
+//                 <div className="flex items-center justify-between">
+//                   <div className="flex items-center gap-2">
+//                     <Avatar>
+//                       <AvatarImage src="/placeholder-user.jpg" alt="Professora Maria" />
+//                       <AvatarFallback>PJ</AvatarFallback>
+//                     </Avatar>
+//                     <div>
+//                       <h4 className="font-medium">Maria Tereza</h4>
+//                       <p className="text-sm text-muted-foreground">Turma de Ping Pong B</p>
+//                     </div>
+//                   </div>
+//                   <Button variant="ghost" size="icon">
+//                     <ExpandIcon className="h-5 w-5" />
+//                   </Button>
+//                 </div>
+//                 <div className="flex items-center justify-between">
+//                   <div className="flex items-center gap-2">
+//                     <Avatar>
+//                       <AvatarImage src="/placeholder-user.jpg" alt="Professor Garcia" />
+//                       <AvatarFallback>PG</AvatarFallback>
+//                     </Avatar>
+//                     <div>
+//                       <h4 className="font-medium">Laura Garcia</h4>
+//                       <p className="text-sm text-muted-foreground">Turma de Basquete F</p>
+//                     </div>
+//                   </div>
+//                   <Button variant="ghost" size="icon">
+//                     <ExpandIcon className="h-5 w-5" />
+//                   </Button>
+//                 </div>
+//               </div>
+//             </CardContent>
+//             <CardFooter>
+//               <Link href="#" className="text-sm font-medium text-primary hover:underline" prefetch={false}>
+//                 Ver Alunos
+//               </Link>
+//             </CardFooter>
+//           </Card>
+//           <Card className="bg-[#fff6d8]">
+//             <CardHeader>
+//               <CardTitle>Turmas</CardTitle>
+//               <CardDescription>Ver Turmas Ativos</CardDescription>
+//             </CardHeader>
+//             <CardContent>
+//               <div className="flex flex-col gap-2">
+//                 <div className="flex items-center justify-between">
+//                   <div className="flex items-center gap-2">
+//                     <Avatar>
+//                       <AvatarImage src="/placeholder-user.jpg" alt="Turma A" />
+//                       <AvatarFallback>JD</AvatarFallback>
+//                     </Avatar>
+//                     <div>
+//                       <h4 className="font-medium">Turma A</h4>
+//                       <p className="text-sm text-muted-foreground">Vôlei</p>
+//                     </div>
+//                   </div>
+//                   <Button variant="ghost" size="icon">
+//                     <ExpandIcon className="h-5 w-5" />
+//                   </Button>
+//                 </div>
+//                 <div className="flex items-center justify-between">
+//                   <div className="flex items-center gap-2">
+//                     <Avatar>
+//                       <AvatarImage src="/placeholder-user.jpg" alt="Turma B" />
+//                       <AvatarFallback>JS</AvatarFallback>
+//                     </Avatar>
+//                     <div>
+//                       <h4 className="font-medium">Turma B</h4>
+//                       <p className="text-sm text-muted-foreground">Futebol</p>
+//                     </div>
+//                   </div>
+//                   <Button variant="ghost" size="icon">
+//                     <ExpandIcon className="h-5 w-5" />
+//                   </Button>
+//                 </div>
+//                 <div className="flex items-center justify-between">
+//                   <div className="flex items-center gap-2">
+//                     <Avatar>
+//                       <AvatarImage src="/placeholder-user.jpg" alt="Turma C" />
+//                       <AvatarFallback>ML</AvatarFallback>
+//                     </Avatar>
+//                     <div>
+//                       <h4 className="font-medium">Turma C</h4>
+//                       <p className="text-sm text-muted-foreground">Tênis de Mesa</p>
+//                     </div>
+//                   </div>
+//                   <Button variant="ghost" size="icon">
+//                     <ExpandIcon className="h-5 w-5" />
+//                   </Button>
+//                 </div>
+//               </div>
+//             </CardContent>
+//             <CardFooter>
+//               <Link href="#" className="text-sm font-medium text-primary hover:underline" prefetch={false}>
+//                 Ver Turmas
+//               </Link>
+//             </CardFooter>
+//           </Card>
+//           <Card className="bg-[#fff6d8]">
+//             <CardHeader>
+//               <CardTitle>Eventos</CardTitle>
+//               <CardDescription>Ver Eventos Programados</CardDescription>
+//             </CardHeader>
+//             <CardContent>
+//               <div className="flex flex-col gap-2">
+//                 <div className="flex items-center justify-between">
+//                   <div className="flex items-center gap-2">
+//                     <div className="bg-primary text-primary-foreground rounded-full px-3 py-1 text-sm font-medium">
+//                       Hoje
+//                     </div>
+//                     <div>
+//                       <h4 className="font-medium">Festa Junina</h4>
+//                       <p className="text-sm text-muted-foreground">4:00 PM - 6:00 PM</p>
+//                     </div>
+//                   </div>
+//                   <Button variant="ghost" size="icon">
+//                     <ExpandIcon className="h-5 w-5" />
+//                   </Button>
+//                 </div>
+//                 <div className="flex items-center justify-between">
+//                   <div className="flex items-center gap-2">
+//                     <div className="bg-accent text-accent-foreground rounded-full px-3 py-1 text-sm font-medium">
+//                       29/07
+//                     </div>
+//                     <div>
+//                       <h4 className="font-medium">Campeonatinho</h4>
+//                       <p className="text-sm text-muted-foreground">9:00 AM - 3:00 PM</p>
+//                     </div>
+//                   </div>
+//                   <Button variant="ghost" size="icon">
+//                     <ExpandIcon className="h-5 w-5" />
+//                   </Button>
+//                 </div>
+//                 <div className="flex items-center justify-between">
+//                   <div className="flex items-center gap-2">
+//                     <div className="bg-secondary text-secondary-foreground rounded-full px-3 py-1 text-sm font-medium">
+//                       20/08
+//                     </div>
+//                     <div>
+//                       <h4 className="font-medium">Dia dos Pais</h4>
+//                       <p className="text-sm text-muted-foreground">7:00 PM - 9:00 PM</p>
+//                     </div>
+//                   </div>
+//                   <Button variant="ghost" size="icon">
+//                     <ExpandIcon className="h-5 w-5" />
+//                   </Button>
+//                 </div>
+//               </div>
+//             </CardContent>
+//             <CardFooter>
+//               <Link href="#" className="text-sm font-medium text-primary hover:underline" prefetch={false}>
+//                 Ver eventos
+//               </Link>
+//             </CardFooter>
+//           </Card>
+//         </div>
+      
+
+//       </main>
+//       <footer className="bg-[#114494] text-[#f9b800] py-4">
+//         <div className="container mx-auto text-center">
+//           <p>&copy; 2024 VOLEA. Todos os direitos reservados.</p>
+//         </div>
+//       </footer>
+      
+//     </div>
+//   )
+// }
+
 export function HomeProfess() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="bg-[#114494] border-b shadow-sm sticky top-0 z-40">
-        <div className="container px-4 md:px-6 flex items-center h-16">
-          <Link href="#" className="mr-6 flex items-center gap-2" prefetch={false}>
-            <img 
-              src="/Logo_Volea.png" 
-              alt="Logo Volea" 
-              className="h-8 w-auto"
-            />
-         <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>Volea</span>
+    <div className="flex flex-col min-h-screen text-center">
+      <header className="bg-white shadow-sm">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <Link href="#" prefetch={false} className="flex items-center gap-2">
+            <img src="/Logo_Volea.png" alt="Logo Volea" className="h-8" />
+            <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>
+              Volea
+            </span>
           </Link>
           <nav className="ml-auto flex items-center gap-4 md:gap-6">
-            <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false} style={{ color: "#f9b800" }}>
-              Turmas
+            <Link
+              href="/professores/perfil"
+              className="text-sm font-medium hover:underline underline-offset-4"
+              prefetch={false}
+              style={{ color: "#f9b800" }}
+            >
+              Perfil
             </Link>
-            <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false} style={{ color: "#f9b800" }}>
-              Alunos
+            <Link
+              href="/professores/relatorioFrequencia"
+              className="text-sm font-medium hover:underline underline-offset-4"
+              prefetch={false}
+              style={{ color: "#f9b800" }}
+            >
+              Frequencia
             </Link>
-            <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false} style={{ color: "#f9b800" }}>
-              Eventos
+            <Link
+              href="/professores/chamada"
+              className="text-sm font-medium hover:underline underline-offset-4"
+              prefetch={false}
+              style={{ color: "#f9b800" }}
+            >
+              Chamada
             </Link>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center gap-1" style={{ color: "#f9b800" }}>
-                  Mais
-                  <ChevronDownIcon className="h-4 w-4" style={{ color: "#f9b800" }} />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-[#114494] text-[#f9b800]">
-                <DropdownMenuItem>
-                  <Link href="#" prefetch={false} style={{ color: "#f9b800" }}>
-                    Comunicados
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="#" prefetch={false} style={{ color: "#f9b800" }}>
-                    Aulas
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="#" prefetch={false} style={{ color: "#f9b800" }}>
-                    Armazém
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
           </nav>
         </div>
       </header>
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="outline" size="icon" className="md:hidden fixed top-4 right-4 z-20">
-            <MenuIcon className="h-6 w-6" />
-            <span className="sr-only">Toggle navigation</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="bg-background text-foreground md:hidden">
-          <div className="flex flex-col gap-4 p-6">
-            <Link href="#" className="text-lg font-medium hover:underline" prefetch={false}>
-              Alunos
-            </Link>
-            <Link href="#" className="text-lg font-medium hover:underline" prefetch={false}>
-              Turmas
-            </Link>
-            <Link href="#" className="text-lg font-medium hover:underline" prefetch={false}>
-              Eventos
-            </Link>
-            <Collapsible>
-              <CollapsibleTrigger className="flex items-center justify-between text-lg font-medium hover:underline">
-                Mais <ChevronDownIcon className="h-5 w-5" />
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <div className="grid gap-2 p-4">
-                  <Link href="#" className="text-lg font-medium hover:underline" prefetch={false}>
-                    Calendário
-                  </Link>
-                  <Link href="#" className="text-lg font-medium hover:underline" prefetch={false}>
-                    Frequencia
-                  </Link>
-                  <Link href="#" className="text-lg font-medium hover:underline" prefetch={false}>
-                    Ajustes
-                  </Link>
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
-        </SheetContent>
-      </Sheet>
-      <main className="flex-1 p-6 md:p-10">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <Card  className="bg-[#fff6d8]">
-            <CardHeader>
-              <CardTitle>Alunos</CardTitle>
-              <CardDescription>Ver Meus Alunos</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Avatar>
-                      <AvatarImage src="/placeholder-user.jpg" alt="Professor João" />
-                      <AvatarFallback>PS</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <h4 className="font-medium">João Pedro</h4>
-                      <p className="text-sm text-muted-foreground">Turma Vôlei A</p>
-                    </div>
-                  </div>
-                  <Button variant="ghost" size="icon">
-                    <ExpandIcon className="h-5 w-5" />
-                  </Button>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Avatar>
-                      <AvatarImage src="/placeholder-user.jpg" alt="Professora Maria" />
-                      <AvatarFallback>PJ</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <h4 className="font-medium">Maria Tereza</h4>
-                      <p className="text-sm text-muted-foreground">Turma de Ping Pong B</p>
-                    </div>
-                  </div>
-                  <Button variant="ghost" size="icon">
-                    <ExpandIcon className="h-5 w-5" />
-                  </Button>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Avatar>
-                      <AvatarImage src="/placeholder-user.jpg" alt="Professor Garcia" />
-                      <AvatarFallback>PG</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <h4 className="font-medium">Laura Garcia</h4>
-                      <p className="text-sm text-muted-foreground">Turma de Basquete F</p>
-                    </div>
-                  </div>
-                  <Button variant="ghost" size="icon">
-                    <ExpandIcon className="h-5 w-5" />
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Link href="#" className="text-sm font-medium text-primary hover:underline" prefetch={false}>
-                Ver Alunos
-              </Link>
-            </CardFooter>
-          </Card>
-          <Card className="bg-[#fff6d8]">
-            <CardHeader>
-              <CardTitle>Turmas</CardTitle>
-              <CardDescription>Ver Turmas Ativos</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Avatar>
-                      <AvatarImage src="/placeholder-user.jpg" alt="Turma A" />
-                      <AvatarFallback>JD</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <h4 className="font-medium">Turma A</h4>
-                      <p className="text-sm text-muted-foreground">Vôlei</p>
-                    </div>
-                  </div>
-                  <Button variant="ghost" size="icon">
-                    <ExpandIcon className="h-5 w-5" />
-                  </Button>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Avatar>
-                      <AvatarImage src="/placeholder-user.jpg" alt="Turma B" />
-                      <AvatarFallback>JS</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <h4 className="font-medium">Turma B</h4>
-                      <p className="text-sm text-muted-foreground">Futebol</p>
-                    </div>
-                  </div>
-                  <Button variant="ghost" size="icon">
-                    <ExpandIcon className="h-5 w-5" />
-                  </Button>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Avatar>
-                      <AvatarImage src="/placeholder-user.jpg" alt="Turma C" />
-                      <AvatarFallback>ML</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <h4 className="font-medium">Turma C</h4>
-                      <p className="text-sm text-muted-foreground">Tênis de Mesa</p>
-                    </div>
-                  </div>
-                  <Button variant="ghost" size="icon">
-                    <ExpandIcon className="h-5 w-5" />
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Link href="#" className="text-sm font-medium text-primary hover:underline" prefetch={false}>
-                Ver Turmas
-              </Link>
-            </CardFooter>
-          </Card>
-          <Card className="bg-[#fff6d8]">
-            <CardHeader>
-              <CardTitle>Eventos</CardTitle>
-              <CardDescription>Ver Eventos Programados</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="bg-primary text-primary-foreground rounded-full px-3 py-1 text-sm font-medium">
-                      Hoje
-                    </div>
-                    <div>
-                      <h4 className="font-medium">Festa Junina</h4>
-                      <p className="text-sm text-muted-foreground">4:00 PM - 6:00 PM</p>
-                    </div>
-                  </div>
-                  <Button variant="ghost" size="icon">
-                    <ExpandIcon className="h-5 w-5" />
-                  </Button>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="bg-accent text-accent-foreground rounded-full px-3 py-1 text-sm font-medium">
-                      29/07
-                    </div>
-                    <div>
-                      <h4 className="font-medium">Campeonatinho</h4>
-                      <p className="text-sm text-muted-foreground">9:00 AM - 3:00 PM</p>
-                    </div>
-                  </div>
-                  <Button variant="ghost" size="icon">
-                    <ExpandIcon className="h-5 w-5" />
-                  </Button>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="bg-secondary text-secondary-foreground rounded-full px-3 py-1 text-sm font-medium">
-                      20/08
-                    </div>
-                    <div>
-                      <h4 className="font-medium">Dia dos Pais</h4>
-                      <p className="text-sm text-muted-foreground">7:00 PM - 9:00 PM</p>
-                    </div>
-                  </div>
-                  <Button variant="ghost" size="icon">
-                    <ExpandIcon className="h-5 w-5" />
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Link href="#" className="text-sm font-medium text-primary hover:underline" prefetch={false}>
-                Ver eventos
-              </Link>
-            </CardFooter>
-          </Card>
-        </div>
-      
 
+      <main className="flex-1 flex flex-col justify-center items-center py-12 md:py-24">
+        <div className="container text-center space-y-8">
+          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+            Bem-vindo, Professor!
+          </h1>
+          <p className="text-muted-foreground md:text-xl">
+            Aqui você pode gerenciar suas turmas, alunos e eventos com facilidade.
+          </p>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {/* Cartões (Cards) */}
+            <Card className="bg-[#fff6d8]">
+              <CardHeader>
+                <CardTitle>Comunicados</CardTitle>
+                <CardDescription>Ver Comunicdos</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>Fique por dentro do que esta acontecendo em nossa escola.</p>
+              </CardContent>
+              <CardFooter>
+                <Link
+                  href="/comunicacao"
+                  className="text-sm font-medium text-primary hover:underline"
+                  prefetch={false}
+                >
+                  Ver Comunicados
+                </Link>
+              </CardFooter>
+            </Card>
+
+            <Card className="bg-[#fff6d8]">
+              <CardHeader>
+                <CardTitle>Turmas</CardTitle>
+                <CardDescription>Ver Turmas Ativas</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>Visualize e edite suas turmas ativas.</p>
+              </CardContent>
+              <CardFooter>
+                <Link
+                  href="/turmas"
+                  className="text-sm font-medium text-primary hover:underline"
+                  prefetch={false}
+                >
+                  Ver Turmas
+                </Link>
+              </CardFooter>
+            </Card>
+
+            <Card className="bg-[#fff6d8]">
+              <CardHeader>
+                <CardTitle>Eventos</CardTitle>
+                <CardDescription>Ver Eventos Programados</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>Fique por dentro dos próximos eventos e atividades.</p>
+              </CardContent>
+              <CardFooter>
+                <Link
+                  href="/eventos"
+                  className="text-sm font-medium text-primary hover:underline"
+                  prefetch={false}
+                >
+                  Ver Eventos
+                </Link>
+              </CardFooter>
+            </Card>
+          </div>
+        </div>
       </main>
+
       <footer className="bg-[#114494] text-[#f9b800] py-4">
         <div className="container mx-auto text-center">
           <p>&copy; 2024 VOLEA. Todos os direitos reservados.</p>
         </div>
       </footer>
-      
     </div>
-  )
+  );
 }
+
 
 function ChevronDownIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (

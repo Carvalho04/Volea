@@ -11,7 +11,6 @@ import Link from 'next/link'
 import { ArrowLeft, ChevronLeft, ChevronRight, Plus } from 'lucide-react'
 import { getWeekDates, formatDate, isSameDay } from '@/lib/date-utils'
 
-// Mock data for classes and schedules
 const classes = [
   { id: '1', name: 'Volei - Turma A', teacher: 'João Silva' },
   { id: '2', name: 'Futebol - Turma B', teacher: 'Maria Oliveira' },
@@ -68,16 +67,18 @@ export function CalendarioAulas() {
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="#" prefetch={false} className="flex items-center gap-2">
+          <Link href="/professores" prefetch={false} className="flex items-center gap-2">
             <img src="/Logo_Volea.png" alt="Logo Volea" className="h-8" />
             <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>
               Volea
             </span>
           </Link>
+          <Link href="/professores">
           <Button variant="ghost" size="sm" style={{ color: "#f9b800" }}>
             <ArrowLeft className="h-4 w-4 mr-2" style={{ color: "#f9b800" }} />
             Voltar
           </Button>
+          </Link>
         </div>
       </header>
 

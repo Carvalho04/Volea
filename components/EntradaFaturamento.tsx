@@ -22,8 +22,6 @@
   //   status: 'pago' | 'pendente'
   // }
 
-  // const alunosMock = ['Alice Johnson', 'Bob Smith', 'Charlie Brown', 'Diana Prince']
-  // const turmasMock = ['Matemática 101', 'Literatura Inglesa', 'Física', 'Ciência da Computação']
 
   // export function TelaEntradaFaturamento() {
   //   const [entradas, setEntradas] = useState<EntradaFaturamento[]>([])
@@ -96,7 +94,7 @@
   //                       <SelectValue placeholder="Selecione o aluno" />
   //                     </SelectTrigger>
   //                     <SelectContent>
-  //                       {alunosMock.map((a) => (
+  //                       {alunos.map((a) => (
   //                         <SelectItem key={a} value={a}>{a}</SelectItem>
   //                       ))}
   //                     </SelectContent>
@@ -109,7 +107,7 @@
   //                       <SelectValue placeholder="Selecione a turma" />
   //                     </SelectTrigger>
   //                     <SelectContent>
-  //                       {turmasMock.map((t) => (
+  //                       {turmas.map((t) => (
   //                         <SelectItem key={t} value={t}>{t}</SelectItem>
   //                       ))}
   //                     </SelectContent>
@@ -151,7 +149,7 @@
   //                     <SelectValue placeholder="Selecione a turma" />
   //                   </SelectTrigger>
   //                   <SelectContent>
-  //                     {turmasMock.map((t) => (
+  //                     {turmas.map((t) => (
   //                       <SelectItem key={t} value={t}>{t}</SelectItem>
   //                     ))}
   //                   </SelectContent>
@@ -164,7 +162,7 @@
   //                     <SelectValue placeholder="Selecione o aluno" />
   //                   </SelectTrigger>
   //                   <SelectContent>
-  //                     {alunosMock.map((a) => (
+  //                     {alunosm.ap((a) => (
   //                       <SelectItem key={a} value={a}>{a}</SelectItem>
   //                     ))}
   //                   </SelectContent>
@@ -337,7 +335,7 @@
         turma: turmaSelecionada,
         plano: planoSelecionado,
         desconto: descontoSelecionado,
-        valorOriginal,
+        valorPlano,
         valorDesconto,
         valorImposto,
         valorTotal,
@@ -365,16 +363,19 @@
         {/* Cabeçalho */}
         <header className="bg-white shadow-sm">
           <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-            <Link href="#" prefetch={false} className="flex items-center gap-2">
+            <Link href="/instituicao" prefetch={false} className="flex items-center gap-2">
               <img src="/Logo_Volea.png" alt="Logo Volea" className="h-8" />
               <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>
                 Volea
               </span>
             </Link>
+            <Link href="/instituicao">
+            
             <Button variant="ghost" size="sm" style={{ color: "#f9b800" }}>
               <ArrowLeft className="h-4 w-4 mr-2" style={{ color: "#f9b800" }} />
               Voltar
             </Button>
+            </Link>
           </div>
         </header>
 

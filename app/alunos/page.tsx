@@ -1,11 +1,11 @@
 'use client';
-import { HomeAlunos } from "@/components/HomeAlunos";
+import { HomeAluno } from "@/components/HomeAlunos";
 
 
 export default function Alunos() {
     return (
       <div>
-        <HomeAlunos/>
+        <HomeAluno/>
       </div>
     );
   }

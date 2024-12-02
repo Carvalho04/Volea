@@ -8,11 +8,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import Link from 'next/link'
 import { ArrowLeft, Calendar, Download } from 'lucide-react'
 
-// Mock data for a student's attendance across different classes
+//  data for a student's attendance across different classes
 const studentAttendance = [
   { 
     classId: '1', 
-    className: 'Volei - Turma A',
+    className: 'Vôlei Sábados',
     attendance: [
       { date: '2024-03-01', present: true },
       { date: '2024-03-08', present: true },
@@ -23,7 +23,7 @@ const studentAttendance = [
   },
   { 
     classId: '2', 
-    className: 'Futebol - Turma B',
+    className: 'Futebol Sexta Feira',
     attendance: [
       { date: '2024-03-02', present: true },
       { date: '2024-03-09', present: false },
@@ -34,7 +34,7 @@ const studentAttendance = [
   },
   { 
     classId: '3', 
-    className: 'Basquete - Turma C',
+    className: 'Basquete Terças e Quintas',
     attendance: [
       { date: '2024-03-03', present: false },
       { date: '2024-03-10', present: true },
@@ -69,16 +69,18 @@ export function RelatorioAluno() {
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="#" prefetch={false} className="flex items-center gap-2">
+          <Link href="/alunos" prefetch={false} className="flex items-center gap-2">
             <img src="/Logo_Volea.png" alt="Logo Volea" className="h-8" />
             <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>
               Volea
             </span>
           </Link>
+          <Link href="/alunos">
           <Button variant="ghost" size="sm" style={{ color: "#f9b800" }}>
             <ArrowLeft className="h-4 w-4 mr-2" style={{ color: "#f9b800" }} />
             Voltar
           </Button>
+          </Link>
         </div>
       </header>
 

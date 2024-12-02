@@ -16,6 +16,9 @@
     planoId: number;
     alunoId: number;
     descontoId: number;
+    alunoNome: string;
+    planoNome: string;
+    descontoNome: string;
     valorPlano: number;
     valorDesconto: number;
     valorImposto: number;
@@ -340,16 +343,18 @@
         {/* Cabeçalho */}
         <header className="bg-white shadow-sm">
           <div className="container mx-auto px-4 py-4 flex justify-between planos-center">
-            <Link href="#" prefetch={false} className="flex planos-center gap-2">
+            <Link href="/initituicao" prefetch={false} className="flex planos-center gap-2">
               <img src="/Logo_Volea.png" alt="Logo Volea" className="h-8" />
               <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>
                 Volea
               </span>
             </Link>
+            <Link href="/instituicao">
             <Button variant="ghost" size="sm" style={{ color: "#f9b800" }}>
               <ArrowLeft className="h-4 w-4 mr-2" style={{ color: "#f9b800" }} />
               Voltar
             </Button>
+            </Link>
           </div>
         </header>
 
@@ -554,13 +559,14 @@
 
 
           return (
+            
             <Card key={pagamento.id} className="w-full shadow-lg p-4">
               <CardHeader>
-                <CardTitle>{selectedAluno ? selectedAluno.nomealuno : 'Aluno não encontrado'}</CardTitle>
+                <CardTitle>{pagamento.alunoNome}</CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col gap-2">
-                <p><strong>Plano:</strong> {selectedPlano ? selectedPlano.nomeplano : 'Plano não encontrado'}</p>
-                <p><strong>Desconto:</strong> {selectedDesconto ? selectedDesconto.nomedesconto : 'Desconto não encontrado'}</p>
+                <p><strong>Plano:</strong> {pagamento.planoNome}</p>
+                <p><strong>Desconto:</strong> {pagamento.descontoNome}</p>
                 <p><strong>Data de Pagamento:</strong> {pagamento.dataPagamento ? new Date(pagamento.dataPagamento).toLocaleDateString() : 'Não informada'}</p>
               </CardContent>
             </Card>

@@ -96,7 +96,7 @@ export function Eventos() {
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="#" prefetch={false} className="flex items-center gap-2">
+          <Link href="/alunos" prefetch={false} className="flex items-center gap-2">
             <img src="/Logo_Volea.png" alt="Logo Volea" className="h-8" />
             <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>
               Volea
@@ -134,7 +134,7 @@ export function Eventos() {
                   <h3 className="text-lg font-semibold mb-2">Participantes</h3>
                   <p className="text-muted-foreground">
                     <Users className="inline mr-2" />
-                    {evento.participantes} / {evento.maxPariticipantes}
+                    {evento.participantes} Até  {evento.maxPariticipantes}
                   </p>
                 </div>
                 <div>
@@ -143,7 +143,7 @@ export function Eventos() {
                   <p className="text-sm text-muted-foreground">Treinador Principal</p>
                 </div>
               </CardContent>
-              <CardFooter className="justify-between">
+              {/* <CardFooter className="justify-between">
                 <Button
                   aria-label="Inscrever-se no evento"
                   className='w-full'
@@ -151,7 +151,7 @@ export function Eventos() {
                 >
                   Inscrever-se no Evento
                 </Button>
-              </CardFooter>
+              </CardFooter> */}
             </Card>
           );
         })}

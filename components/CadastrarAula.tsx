@@ -28,11 +28,13 @@ interface Aula {
   id: number;
   nome: string;
   data: Date;
-  classeId: number,
-  classe?: Classe,
-  ativo: boolean,
-  professor?: Professor,
-  professorId: number,
+  classeId: number;
+  classe?: Classe;
+  ativo: boolean;
+  professor?: Professor;
+  professorId: number;
+  classeNome: string;
+  professorNome: string;
 }
 
 
@@ -174,16 +176,19 @@ export function CadastrarAula() {
       {/* Cabeçalho */}
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="#" prefetch={false} className="flex items-center gap-2">
+          <Link href="/professores" prefetch={false} className="flex items-center gap-2">
             <img src="/Logo_Volea.png" alt="Logo Volea" className="h-8" />
             <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>
               Volea
             </span>
           </Link>
+          <Link href="/professores">
+          
           <Button variant="ghost" size="sm" style={{ color: "#f9b800" }}>
             <ArrowLeft className="h-4 w-4 mr-2" style={{ color: "#f9b800" }} />
             Voltar
           </Button>
+          </Link>
         </div>
       </header>
 
@@ -307,8 +312,6 @@ export function CadastrarAula() {
 
 {aulas.length > 0 && classes.length > 0 && professores.length > 0 ? (
   aulas.map((aula) => {
-    const classe = classes.find(cl => cl.id === aula.classeId);
-    const professor = professores.find(prof => prof.id === aula.professorId);
 
     return (
       <Card key={aula.id} className="shadow-lg">
@@ -316,9 +319,9 @@ export function CadastrarAula() {
           <CardTitle>{aula.nome}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p><strong>Classe:</strong> {classe ? classe.nome : "Desconhecido"}</p>
+          <p><strong>Classe:</strong> {aula.classeNome}</p>
           <p><strong>Data:</strong> {aula.data ? new Date(aula.data).toLocaleDateString() : "Desconhecido"}</p>
-          <p><strong>Professor:</strong> {professor ? professor.nome : "Desconhecido"}</p>
+          <p><strong>Professor:</strong> {aula.professorNome}</p>
           <Button 
             variant="outline" 
             size="sm" 

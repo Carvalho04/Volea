@@ -17,7 +17,7 @@ import { AlertCircle } from "lucide-react"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 
-const mockData: Payment[] = [
+const mData: Payment[] = [
   {
     id: '1',
     student: 'Alice Johnson',
@@ -44,7 +44,7 @@ const mockData: Payment[] = [
 export default function PaymentInquiryScreen() {
   const [searchTerm, setSearchTerm] = useState('')
   
-  const filteredData = mockData.filter(payment =>
+  const filteredData = mData.filter(payment =>
     payment.student.toLowerCase().includes(searchTerm.toLowerCase())
   )
 

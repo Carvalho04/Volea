@@ -59,7 +59,7 @@ export function Turmas() {
 
   const matricularAluno = async (turmaId: number) => {
     if (!usuarioId) {
-      alert("Você precisa estar logado para se matricular.");
+      alert("Você já atingiu o número de turmas liberadas.");
       return;
     }
 
@@ -78,16 +78,18 @@ export function Turmas() {
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="#" prefetch={false} className="flex items-center gap-2">
+          <Link href="/alunos" prefetch={false} className="flex items-center gap-2">
             <img src="/Logo_Volea.png" alt="Logo Volea" className="h-8" />
             <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>
               Volea
             </span>
           </Link>
+          <Link href="/alunos">
           <Button variant="ghost" size="sm" style={{ color: "#f9b800" }}>
             <ArrowLeft className="h-4 w-4 mr-2" style={{ color: "#f9b800" }} />
             Voltar
           </Button>
+          </Link>
         </div>
       </header>
 

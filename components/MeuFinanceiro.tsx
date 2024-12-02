@@ -17,7 +17,7 @@ import { AlertCircle } from "lucide-react"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 
-const mockData: Payment[] = [
+const mData: Payment[] = [
   {
     id: '1',
     student: 'Henry Matheus Rodrigues',
@@ -44,7 +44,7 @@ const mockData: Payment[] = [
 export default function PaymentInquiryScreen() {
   const [searchTerm, setSearchTerm] = useState('')
   
-  const filteredData = mockData.filter(payment =>
+  const filteredData = mData.filter(payment =>
     payment.student.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
@@ -58,7 +58,7 @@ export default function PaymentInquiryScreen() {
       {/* Cabeçalho */}
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="#" prefetch={false} className="flex items-center gap-2">
+          <Link href="/alunos" prefetch={false} className="flex items-center gap-2">
             <img src="/Logo_Volea.png" alt="Logo Volea" className="h-8" />
             <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>
               Volea

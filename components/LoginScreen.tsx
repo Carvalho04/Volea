@@ -265,11 +265,11 @@ export function LoginScreen() {
               <LogIn className="mr-2 h-4 w-4" /> Entrar
             </Button>
           </CardContent>
-          <CardFooter className="flex flex-col space-y-4">
+          {/* <CardFooter className="flex flex-col space-y-4">
             <Link href="/login/recuperarSenha" className="text-sm text-center text-blue-500 hover:underline">
               Esqueceu sua senha?
             </Link>
-          </CardFooter>
+          </CardFooter> */}
         </Card>
       </main>
 

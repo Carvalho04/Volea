@@ -2,180 +2,206 @@ import Link from "next/link"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
-import { JSX, SVGProps } from "react"
+import { JSX, SVGProps, useEffect, useState } from "react"
 import Head from "next/head"
+import api from "@/service/api"
 
-
-
-
+  
 export function HomeInst() {
-    return (
-    
-      <div className="flex flex-col min-h-screen" style={{ backgroundColor: "#deecff" }}>
-     
-        <header className="bg-[#114494] border-b shadow-sm sticky top-0 z-40">
-          <div className="container px-4 md:px-6 flex items-center h-16">
-            <Link href="#" className="mr-6 flex items-center gap-2" prefetch={false}>
-              <img 
-                src="/Logo_Volea.png" 
-                alt="Logo Volea" 
-                className="h-8 w-auto"
-              />
-           <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>Volea</span>
-            </Link>
-            <nav className="ml-auto flex items-center gap-4 md:gap-6">
-              <Link href="/alunos/cadastroAlunos" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false} style={{ color: "#f9b800" }}>
-                Alunos
-              </Link>
-              <Link href="/professores/cadastroProfessores" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false} style={{ color: "#f9b800" }}>
-                Professores
-              </Link>
-              <Link href="/instituicao/manter" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false} style={{ color: "#f9b800" }}>
-                Manter
-              </Link>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center gap-1" style={{ color: "#f9b800" }}>
-                    Mais
-                    <ChevronDownIcon className="h-4 w-4" style={{ color: "#f9b800" }} />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="bg-[#114494] text-[#f9b800]">
-                  <DropdownMenuItem>
-                    <Link href="#" prefetch={false} style={{ color: "#f9b800" }}>
-                      Comunicados
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="#" prefetch={false} style={{ color: "#f9b800" }}>
-                      Financeiro
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="#" prefetch={false} style={{ color: "#f9b800" }}>
-                      Armazém
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </nav>
-          </div>
-        </header>
-        
-        <main className="flex-1 bg-muted/40 py-12 md:py-24">
-          <div className="container px-4 md:px-6 grid gap-12">
-            <div className="grid gap-4">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                Bem vindo!
-              </h1>
-              <p className="text-muted-foreground md:text-xl">
-                Organize seus recursos da melhor maneira possivel.
-              </p>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              <Card className="bg-[#fff6d8]">
-                <CardHeader>
-                  <CardTitle>Professores</CardTitle>
-                  <CardDescription>Organize e mantenha seus professores.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <span className="text-4xl font-bold">120</span>
-                    <UsersIcon className="h-8 w-8 text-muted-foreground" />
+
+  const [usuariosAtivos, setUsuariosAtivos] = useState(0);
+  const [professoresAtivos, setProfessoresAtivos] = useState(0);
+  const [alunosAtivos, setAlunosAtivos] = useState(0);
+  const [admAtivos, setAdmAtivos] = useState(0);
+  
+
+  useEffect(() => {
+      const fetchProfessoresAtivos = async () => {
+          try {
+              const response = await api.get("/api/usuarios/professores/ativos");
+              setProfessoresAtivos(response.data.length);
+          } catch (error) {
+              console.error("Erro ao buscar professores ativos:", error);
+          }
+      };
+
+      const fetchAlunosAtivos = async () => {
+          try {
+              const response = await api.get("/api/usuarios/alunos/ativos");
+              setAlunosAtivos(response.data.length);
+          } catch (error) {
+              console.error("Erro ao buscar alunos ativos:", error);
+          }
+      };
+
+      const fetchAdmAtivos = async () => {
+        try {
+            const response = await api.get("/api/usuarios/adm/ativos");
+            setAdmAtivos(response.data.length);
+        } catch (error) {
+            console.error("Erro ao buscar administradores ativos:", error);
+        }
+    };
+
+
+      fetchAlunosAtivos();
+      fetchProfessoresAtivos();
+  }, []); 
+  
+  return (
+      <div className="flex flex-col min-h-screen" style={{
+        backgroundColor: "#deecff", 
+        // backgroundImage: "/Logo_Volea.png", 
+        // backgroundRepeat: "no-repeat", 
+        // backgroundPosition: "center", 
+        // backgroundSize: "contain", 
+        // backgroundBlendMode: "overlay",
+      }}>
+          <header className="bg-white shadow-sm">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <Link href="#" prefetch={false} className="flex items-center gap-2">
+            <img src="/Logo_Volea.png" alt="Logo Volea" className="h-8" />
+            <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>
+              Volea
+            </span>
+          </Link>
+                  <nav className="ml-auto flex items-center gap-4 md:gap-6">
+                      <Link href="/alunos/cadastroAlunos" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false} style={{ color: "#f9b800" }}>
+                          Alunos
+                      </Link>
+                      <Link href="/professores/cadastroProfessores" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false} style={{ color: "#f9b800" }}>
+                          Professores
+                      </Link>
+                      <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" className="flex items-center gap-1" style={{ color: "#f9b800" }}>
+                                  Mais
+                                  <ChevronDownIcon className="h-4 w-4" style={{ color: "#f9b800" }} />
+                              </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="bg-[#114494] text-[#f9b800]">
+
+                              <DropdownMenuItem>
+                                  <Link href="/financeiro/entradaFinanceiro" prefetch={false} style={{ color: "#f9b800" }}>
+                                      Entrada Financeira
+                                  </Link>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>
+                                  <Link href="/financeiro/descontos" prefetch={false} style={{ color: "#f9b800" }}>
+                                      Criat Desconto
+                                  </Link>
+                                  
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>
+                                  <Link href="/comunicacao/cadastrarComunicacao" prefetch={false} style={{ color: "#f9b800" }}>
+                                      Comunicados
+                                  </Link>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>
+                                  <Link href="/eventos/cadastrarEventos" prefetch={false} style={{ color: "#f9b800" }}>
+                                      Eventos
+                                  </Link>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>
+                                  <Link href="/financeiro/planos" prefetch={false} style={{ color: "#f9b800" }}>
+                                      Criar Plano
+                                  </Link>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>
+                                  <Link href="/estoque" prefetch={false} style={{ color: "#f9b800" }}>
+                                      Estoque
+                                  </Link>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>
+                                  <Link href="/estoque/cadastroMateriais" prefetch={false} style={{ color: "#f9b800" }}>
+                                      Cadastro de Materiais
+                                  </Link>
+                              </DropdownMenuItem>
+                          </DropdownMenuContent>
+                      </DropdownMenu>
+                  </nav>
+              </div>
+          </header>
+
+          <main className="flex-1 bg-muted/40 py-12 md:py-24 flex items-center justify-center">
+              <div className="container px-4 md:px-6 grid gap-12 text-center">
+                  <div className="grid gap-4">
+                      <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                          Bem vindo!
+                      </h1>
+                      <p className="text-muted-foreground md:text-xl">
+                          Organize seus recursos da melhor maneira possivel.
+                      </p>
                   </div>
-                </CardContent>
-                <CardFooter>
-                  <Link href="#" className="w-full" prefetch={false}>
-                    Ver Professores
-                  </Link>
-                </CardFooter>
-              </Card>
-  
-              <Card className="bg-[#fff6d8]">
-                <CardHeader>
-                  <CardTitle>Alunos</CardTitle>
-                  <CardDescription>Organize e mantenha seus alunos.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <span className="text-4xl font-bold">1,250</span>
-                    <UsersIcon className="h-8 w-8 text-muted-foreground" />
+                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  <Card className="bg-[#fff6d8]">
+                    <CardHeader>
+                        <CardTitle>Professores Ativos</CardTitle>
+                        <CardDescription>Quantidade de professores ativos no sistema.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="flex items-center justify-between">
+                            <span className="text-4xl font-bold">{professoresAtivos}</span>
+                            <UsersIcon className="h-8 w-8 text-muted-foreground" />
+                        </div>
+                    </CardContent>
+                    <CardFooter>
+                        <Link href="/professores/cadastroProfessores" className="w-full" prefetch={false}>
+                            Ver Detalhes
+                        </Link>
+                    </CardFooter>
+                  </Card>
+
+                      <Card className="bg-[#fff6d8]">
+                          <CardHeader>
+                              <CardTitle>Alunos</CardTitle>
+                              <CardDescription>Organize e mantenha seus alunos.</CardDescription>
+                          </CardHeader>
+                          <CardContent>
+                            <div className="flex items-center justify-between">
+                                <span className="text-4xl font-bold">{alunosAtivos}</span>
+                                <UsersIcon className="h-8 w-8 text-muted-foreground" />
+                            </div>
+                        </CardContent>
+                          <CardFooter>
+                              <Link href="/alunos/cadastroAlunos" className="w-full" prefetch={false}>
+                                  Ver Alunos
+                              </Link>
+                          </CardFooter>
+                      </Card>
+
+                      <Card className="bg-[#fff6d8]">
+                          <CardHeader>
+                              <CardTitle>Administradores</CardTitle>
+                              <CardDescription>Veja e Organize os demais administradores da Escola.</CardDescription>
+                          </CardHeader>
+                          <CardContent>
+                            <div className="flex items-center justify-between">
+                                <span className="text-4xl font-bold">{admAtivos}</span>
+                                <UsersIcon className="h-8 w-8 text-muted-foreground" />
+                            </div>
+                        </CardContent>
+                          <CardFooter>
+                              <Link href="/instituicao/cadastroAdm" className="w-full" prefetch={false}>
+                                  Ver Administradores
+                              </Link>
+                          </CardFooter>
+                      </Card>
+
                   </div>
-                </CardContent>
-                <CardFooter>
-                  <Link href="#" className="w-full" prefetch={false}>
-                    Ver Alunos
-                  </Link>
-                </CardFooter>
-              </Card>
-  
-              <Card className="bg-[#fff6d8]">
-                <CardHeader>
-                  <CardTitle>Eventos</CardTitle>
-                  <CardDescription>Organize e acompanhe os futuros eventos.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <span className="text-4xl font-bold">24</span>
-                    <CalendarIcon className="h-8 w-8 text-muted-foreground" />
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Link href="#" className="w-full" prefetch={false}>
-                    Ver Eventos
-                  </Link>
-                </CardFooter>
-              </Card>
-            </div>
-          </div>
-        </main>
-  
-        <footer className="bg-[#114494] p-6 md:py-12 w-full text-[#f9b800]">
-          <div className="container max-w-7xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-16 text-sm">
-            <div className="grid gap-4">
-              <h3 className="font-semibold">Escola</h3>
-              <Link href="#" prefetch={false}>
-                Sobre
-              </Link>
-              <Link href="#" prefetch={false}>
-                História
-              </Link>
-              <Link href="#" prefetch={false}>
-                Missão
-              </Link>
-            </div>
-  
-            <div className="grid gap-4">
-              <h3 className="font-semibold">Departamentos</h3>
-              <Link href="#" prefetch={false}>
-                Financeiro
-              </Link>
-              <Link href="#" prefetch={false}>
-                Almoxarifado
-              </Link>
-              <Link href="#" prefetch={false}>
-                Esportes
-              </Link>
-            </div>
-  
-            <div className="grid gap-4">
-              <h3 className="font-semibold">Contatos</h3>
-              <Link href="#" prefetch={false}>
-                Whatsapp
-              </Link>
-              <Link href="#" prefetch={false}>
-                Instagram
-              </Link>
-              <Link href="#" prefetch={false}>
-                E-mail
-              </Link>
-            </div>
-          </div>
-        </footer>
+              </div>
+          </main>
+
+
+          <footer className="bg-[#114494] text-[#f9b800] py-4">
+        <div className="container mx-auto text-center">
+          <p>&copy; 2024 VOLEA. Todos os direitos reservados.</p>
+        </div>
+      </footer>
       </div>
-    )
-  }
-  
+  );
+}
+
     
 
 function CalendarIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
