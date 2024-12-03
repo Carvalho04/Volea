@@ -46,6 +46,14 @@ export function HomeAluno() {
             >
               Comunicados
             </Link>
+            <Link
+              href="/alunos/comprovanteMatricula"
+              className="text-sm font-medium hover:underline underline-offset-4"
+              prefetch={false}
+              style={{ color: "#f9b800" }}
+            >
+              Comprovante
+            </Link>
           </nav>
         </div>
       </header>

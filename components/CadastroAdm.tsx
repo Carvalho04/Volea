@@ -277,7 +277,7 @@ export function CadastroAdms() {
               Volea
             </span>
           </Link>
-          <Link href="/intituicao">
+          <Link href="/instituicao">
             <Button variant="ghost" size="sm" style={{ color: "#f9b800" }}>
               <ArrowLeft className="h-4 w-4 mr-2" style={{ color: "#f9b800" }} />
               Voltar

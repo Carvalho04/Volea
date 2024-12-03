@@ -343,7 +343,7 @@
         {/* Cabeçalho */}
         <header className="bg-white shadow-sm">
           <div className="container mx-auto px-4 py-4 flex justify-between planos-center">
-            <Link href="/initituicao" prefetch={false} className="flex planos-center gap-2">
+            <Link href="/instituicao" prefetch={false} className="flex planos-center gap-2">
               <img src="/Logo_Volea.png" alt="Logo Volea" className="h-8" />
               <span className="font-bold text-2xl" style={{ color: "#f9b800" }}>
                 Volea

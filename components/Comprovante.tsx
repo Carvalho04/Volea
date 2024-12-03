@@ -34,7 +34,7 @@ export function ComprovanteMatricula() {
             Volea
           </span>
         </Link>
-        <Link href="/alunos/perfil">
+        <Link href="/alunos">
         <Button variant="ghost" size="sm" style={{ color: "#f9b800" }}>
           <ArrowLeft className="h-4 w-4 mr-2" style={{ color: "#f9b800" }} />
           Voltar

@@ -142,7 +142,7 @@ export function CadastroAlunos() {
 
   const handleReativar = async (id: number) => {
     try {
-      await api.put(`/api/usuarios/reativar/${id}`);
+      await api.put(`/api/usuarios/ativar/${id}`);
       setSubmitStatus('success');
       setAlunos(prev => prev.map(aluno => aluno.id === id ? { ...aluno, ativo: true } : aluno));
     } catch (error) {

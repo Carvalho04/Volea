@@ -36,14 +36,14 @@ export function HomeInst() {
 
       const fetchAdmAtivos = async () => {
         try {
-            const response = await api.get("/api/usuarios/adm/ativos");
+            const response = await api.get("/api/usuarios/adm");
             setAdmAtivos(response.data.length);
         } catch (error) {
             console.error("Erro ao buscar administradores ativos:", error);
         }
     };
 
-
+        fetchAdmAtivos();
       fetchAlunosAtivos();
       fetchProfessoresAtivos();
   }, []); 
